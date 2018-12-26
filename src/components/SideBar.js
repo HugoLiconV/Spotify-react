@@ -49,7 +49,7 @@ const SideBar = props => {
   );
 
   return (
-    <Hidden msDown implementation="css">
+    <Hidden smDown implementation="css">
       <Drawer
         anchor="left"
         variant="permanent"
