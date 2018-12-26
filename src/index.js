@@ -4,6 +4,11 @@ import store from './store';
 import './index.css';
 import Root from './Root';
 import * as serviceWorker from './serviceWorker';
+import { saveItem } from './services/localStorage';
+
+store.subscribe(() => {
+  saveItem('TOKEN', store.getState().token.token);
+});
 
 ReactDOM.render(<Root store={store} />, document.getElementById('root'));
 
