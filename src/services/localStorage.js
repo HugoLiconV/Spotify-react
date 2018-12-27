@@ -12,9 +12,11 @@ export const loadItem = item => {
 };
 
 export const saveItem = (key, value) => {
-  try {
-    localStorage.setItem(key, value);
-  } catch (err) {
-    console.log(err);
+  if (key && value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
