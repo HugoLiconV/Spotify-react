@@ -23,8 +23,7 @@ class App extends Component {
   render() {
     const token = loadItem('TOKEN');
     const { classes, ...rest } = this.props;
-
-    if (token) {
+    if (token !== undefined) {
       return (
         <div className={classes.wrapper}>
           <SideBar routes={appRoutes} {...rest} />

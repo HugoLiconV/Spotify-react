@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveToken } from '../actions/TokenActions';
+import { saveToken } from '../actions/tokenActions';
 import PropTypes from 'prop-types';
-
-const styles = {
-  root: {
-    flexGrow: 1,
-    textAlign: 'center',
-    padding: '16px'
-  }
-};
 
 class Callback extends Component {
   componentDidMount() {
