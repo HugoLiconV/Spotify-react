@@ -7,12 +7,15 @@ import cardAvatarStyle from '../../assets/styles/components/cardAvatarStyle';
 
 function CardAvatar({ ...props }) {
   const { classes, children, className, plain, profile, ...rest } = props;
-  const cardAvatarClasses = classNames({
-    [classes.cardAvatar]: true,
-    [classes.cardAvatarProfile]: profile,
-    [classes.cardAvatarPlain]: plain,
-    [className]: className !== undefined
-  });
+
+  const cardAvatarClasses = classNames(
+    {
+      [classes.cardAvatar]: true,
+      [classes.cardAvatarProfile]: profile,
+      [classes.cardAvatarPlain]: plain
+    },
+    className
+  );
   return (
     <div className={cardAvatarClasses} {...rest}>
       {children}
@@ -21,6 +24,7 @@ function CardAvatar({ ...props }) {
 }
 
 CardAvatar.propTypes = {
+  classes: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   profile: PropTypes.bool,
