@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './store';
-import './index.css';
 import Root from './Root';
 import * as serviceWorker from './serviceWorker';
 import { saveItem } from './services/localStorage';
+import './assets/css/material-dashboard-react.css';
 
 store.subscribe(() => {
   saveItem('TOKEN', store.getState().token.token);

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import SideBar from '../components/SideBar';
+import SideBar from '../views/SideBar';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import appRoutes from '../routes/appRoutes';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dashboardStyle from '../assets/styles/layouts/dashboardStyle';
 import { loadItem } from '../services/localStorage';
-import LoginSpotify from '../components/LoginSpotify';
+import LoginSpotify from '../views/LoginSpotify';
 
 const switchRoutes = (
   <Switch>

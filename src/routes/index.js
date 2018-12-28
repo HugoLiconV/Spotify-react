@@ -1,5 +1,5 @@
 import App from '../layouts/App';
-import Callback from '../components/Callback';
+import Callback from '../views/Callback';
 
 const indexRoutes = [
   { path: '/callback', component: Callback },

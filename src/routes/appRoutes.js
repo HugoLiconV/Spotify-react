@@ -5,10 +5,10 @@ import Search from '@material-ui/icons/Search';
 import Explore from '@material-ui/icons/Explore';
 
 // core components/views
-import PlayingNow from '../components/PlayingNow';
-import ExploreComp from '../components/Explore';
-import SearchComp from '../components/Search';
-import Profile from '../components/Profile';
+import PlayingNow from '../views/PlayingNow';
+import ExploreComp from '../views/Explore';
+import SearchComp from '../views/Search';
+import Profile from '../views/Profile';
 
 const appRoutes = [
   {

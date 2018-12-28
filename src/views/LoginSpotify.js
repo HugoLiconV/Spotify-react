@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import Card from './Card/Card';
-import CardBody from './Card/CardBody';
-import Button from './Button/Button';
+import Card from '../components/Card/Card';
+import CardBody from '../components/Card/CardBody';
+import Button from '../components/Button/Button';
 import SpotifyService from '../services/spotifyApi';
 
 const styles = {
