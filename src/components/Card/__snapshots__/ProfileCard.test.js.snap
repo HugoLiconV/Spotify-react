@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProfileCard /> component should match the snapshot 1`] = `
+<WithStyles(Card)
+  profile={true}
+>
+  <WithStyles(CardAvatar)
+    profile={true}
+  >
+    <a
+      href="https://open.spotify.com/user/hugofernandoliconvalenzuela"
+    >
+      <img
+        alt="Hugo Licon"
+        src="https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11880385_912284995474857_7569056323770464976_n.jpg?_nc_cat=109&_nc_ht=scontent.xx&oh=8dea37fe4bd092920aa0a9277f85d1f0&oe=5CD0F3C5"
+      />
+    </a>
+  </WithStyles(CardAvatar)>
+  <WithStyles(CardBody)
+    profile={true}
+  >
+    <div>
+      <h6
+        data-product={true}
+      >
+        Product: 
+        premium
+      </h6>
+      <h6
+        data-country={true}
+      >
+        Country: 
+        MX
+      </h6>
+      <h6
+        data-followers={true}
+      >
+        Followers: 
+        12
+      </h6>
+    </div>
+    <h4
+      data-name={true}
+    >
+      Hugo Licon
+    </h4>
+    <WithStyles(RegularButton)
+      color="primary"
+      href="https://open.spotify.com/user/hugofernandoliconvalenzuela"
+      round={true}
+    >
+      Account
+    </WithStyles(RegularButton)>
+  </WithStyles(CardBody)>
+</WithStyles(Card)>
+`;
