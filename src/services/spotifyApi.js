@@ -8,6 +8,7 @@ class SpotifyService {
       'user-read-recently-played',
       'user-read-currently-playing',
       'user-read-birthdate',
+      'user-modify-playback-state',
       'user-read-playback-state',
       'user-read-email',
       'user-read-private'

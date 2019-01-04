@@ -7,29 +7,23 @@ class RequestService {
     const token = loadItem('TOKEN');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      axios.defaults.headers.common['Content-Type'] =
-        'application/x-www-form-urlencoded';
+      axios.defaults.headers.common['Content-Type'] = 'application/json';
     }
-
-    // axios.interceptors.request.use(
-    //   function(config) {
-    //     console.log(config);
-    //     return config;
-    //   },
-    //   function(error) {
-    //     // Do something with request error
-    //     return Promise.reject(error);
-    //   }
-    // );
   }
 
   async makeRequest({ url, method = 'get', data }) {
     try {
-      const response = await axios[method](url, {
-        data
-      });
+      const response = await axios[method](url, data);
       return response.data;
     } catch (e) {
+      // TODO: Check 404 error
+      console.log(e.message);
+      /* 
+      Errors en el store
+      dispatch (errorActions.showActions())
+      el error va a estar en store
+      errorActions.clearErrors
+       */
       return Promise.reject(e);
     }
   }

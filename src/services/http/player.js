@@ -38,12 +38,24 @@ class PlayerService extends RequestService {
     return await this.makeRequest({ url: '/me/player/pause', method: 'put' });
   }
   // PUT	/v1/me/player/play	Start/Resume a User's Playback
-  async play() {
-    return await this.makeRequest({ url: '/me/player/play', method: 'put' });
+  async play(contextUri, offset, position) {
+    const data = {
+      context_uri: contextUri,
+      offset,
+      position_ms: position
+    };
+    return await this.makeRequest({
+      url: '/me/player/play',
+      method: 'put',
+      data
+    });
   }
   // PUT	/v1/me/player/repeat	Set Repeat Mode On User's Playback
-  async setRepeat() {
-    return await this.makeRequest({ url: '/me/player/repeat', method: 'put' });
+  async setRepeat(state) {
+    return await this.makeRequest({
+      url: `/me/player/repeat?state=${state}`,
+      method: 'put'
+    });
   }
   // PUT	/v1/me/player/seek	Seek To Position In Currently Playing Track
   async seek(position_ms) {
@@ -55,8 +67,11 @@ class PlayerService extends RequestService {
     });
   }
   // PUT	/v1/me/player/shuffle	Toggle Shuffle For User's Playback
-  async toggleShuffle() {
-    return await this.makeRequest({ url: '/me/player/shuffle', method: 'put' });
+  async toggleShuffle(shuffle) {
+    return await this.makeRequest({
+      url: `/me/player/shuffle?state=${shuffle}`,
+      method: 'put'
+    });
   }
   // PUT	/v1/me/player	Transfer a User's Playback
 
@@ -73,13 +88,9 @@ class PlayerService extends RequestService {
     if (volumePercent < 0 || volumePercent > 100) {
       throw new Error('Volume must be a value from 0 to 100 inclusive');
     }
-    const data = {
-      volumePercent
-    };
     return await this.makeRequest({
-      url: '/me/player/volume',
-      method: 'put',
-      data
+      url: `/me/player/volume?volume_percent=${volumePercent}`,
+      method: 'put'
     });
   }
 }

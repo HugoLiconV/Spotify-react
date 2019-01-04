@@ -44,31 +44,25 @@ export const getDevices = () => dispatch => {
     .catch(e => console.log(e));
 };
 
-export const getCurrentPlaying = () => dispatch => {
-  playerService
-    .getCurrentlyPlaying()
-    .then(track => {
-      dispatch({ type: GET_CURRENT_PLAYING, payload: track });
-    })
-    .catch(e => console.log(e));
+export const getCurrentlyPlaying = () => async dispatch => {
+  const track = await playerService.getCurrentlyPlaying();
+  dispatch({ type: GET_CURRENT_PLAYING, payload: track });
+  // .then(track => {
+  //
+  // })
+  // .catch(e => console.log(e));
 };
 
-export const nextSong = () => dispatch => {
-  playerService
-    .next()
-    .then(_ => {
-      dispatch({ type: NEXT_SONG });
-    })
-    .catch(e => console.log(e));
+export const nextSong = () => async dispatch => {
+  await playerService.next();
+  dispatch({ type: NEXT_SONG });
+  setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
 
-export const previousSong = () => dispatch => {
-  playerService
-    .previous()
-    .then(_ => {
-      dispatch({ type: PREVIOUS_SONG });
-    })
-    .catch(e => console.log(e));
+export const previousSong = () => async dispatch => {
+  await playerService.previous();
+  dispatch({ type: PREVIOUS_SONG });
+  setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
 
 export const pause = () => dispatch => {
@@ -76,26 +70,26 @@ export const pause = () => dispatch => {
     .pause()
     .then(_ => {
       dispatch({ type: PAUSE });
+      setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
     })
     .catch(e => console.log(e));
 };
 
-export const play = () => dispatch => {
+export const play = (contextUri, offset, position) => dispatch => {
   playerService
-    .play()
+    .play(contextUri, offset, position)
     .then(_ => {
       dispatch({ type: PLAY });
+      setTimeout(() => dispatch(getCurrentlyPlaying()), 500);
     })
     .catch(e => console.log(e));
 };
 
-export const setRepeat = () => dispatch => {
-  playerService
-    .setRepeat()
-    .then(_ => {
-      dispatch({ type: SET_REPEAT });
-    })
-    .catch(e => console.log(e));
+export const setRepeat = state => dispatch => {
+  playerService.setRepeat(state).then(() => {
+    dispatch({ type: SET_REPEAT });
+    setTimeout(() => dispatch(getPlayer()), 300);
+  });
 };
 
 export const seek = position_ms => dispatch => {
@@ -107,13 +101,11 @@ export const seek = position_ms => dispatch => {
     .catch(e => console.log(e));
 };
 
-export const toggleShuffle = () => dispatch => {
-  playerService
-    .toggleShuffle()
-    .then(_ => {
-      dispatch({ type: TOGGLE_SHUFFLE });
-    })
-    .catch(e => console.log(e));
+export const toggleShuffle = shuffle => async dispatch => {
+  playerService.toggleShuffle(shuffle);
+
+  dispatch({ type: TOGGLE_SHUFFLE });
+  setTimeout(() => dispatch(getPlayer()), 200);
 };
 
 export const transferPlayback = deviceIds => dispatch => {

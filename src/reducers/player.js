@@ -7,9 +7,9 @@ import {
 
 const initialState = {
   recentlyPlayed: {},
-  player: [],
+  player: {},
   devices: [],
-  currentlyPlaying: []
+  currentlyPlaying: {}
 };
 
 const player = (state = initialState, action) => {
