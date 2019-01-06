@@ -47,10 +47,6 @@ export const getDevices = () => dispatch => {
 export const getCurrentlyPlaying = () => async dispatch => {
   const track = await playerService.getCurrentlyPlaying();
   dispatch({ type: GET_CURRENT_PLAYING, payload: track });
-  // .then(track => {
-  //
-  // })
-  // .catch(e => console.log(e));
 };
 
 export const nextSong = () => async dispatch => {

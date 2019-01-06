@@ -157,11 +157,9 @@ export class PlayingNow extends Component {
       context,
       item
     } = this.props.currentlyPlaying;
-    //context.uri item.uri item.album.uri
     if (isPlaying) {
       this.pause();
     } else {
-      // debugger;
       const contextUri = context ? context.uri : item.album.uri;
       const offset = { uri: item.uri };
       this.resume(contextUri, offset, progress);
@@ -173,7 +171,7 @@ export class PlayingNow extends Component {
     const player = this.props.player;
 
     if (this.isObjectEmpty(currentlyPlaying) || this.isObjectEmpty(player))
-      return 'Nothing is plying';
+      return 'Nothing is playing';
     const { device } = player;
     const { artists, album, name } = currentlyPlaying.item;
     return (

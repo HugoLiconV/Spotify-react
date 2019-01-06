@@ -16,14 +16,7 @@ class RequestService {
       const response = await axios[method](url, data);
       return response.data;
     } catch (e) {
-      // TODO: Check 404 error
       console.log(e.message);
-      /* 
-      Errors en el store
-      dispatch (errorActions.showActions())
-      el error va a estar en store
-      errorActions.clearErrors
-       */
       return Promise.reject(e);
     }
   }
