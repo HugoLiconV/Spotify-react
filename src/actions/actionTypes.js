@@ -4,6 +4,7 @@ export const HIDE_ERROR = 'HIDE_ERROR';
 
 /*  User actions  */
 export const SAVE_TOKEN = 'SAVE_TOKEN';
+export const DELETE_TOKEN = 'DELETE_TOKEN';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 /* Album Actions */
 export const GET_ALBUM = 'GET_ALBUM';

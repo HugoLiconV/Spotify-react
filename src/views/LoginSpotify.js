@@ -41,8 +41,7 @@ const LoginSpotify = props => {
 };
 
 LoginSpotify.propTypes = {
-  classes: PropTypes.object.isRequired,
-  url: PropTypes.string.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(LoginSpotify);
