@@ -2,7 +2,7 @@ import RequestService from './request';
 
 class SearchService extends RequestService {
   //GET	/v1/search	Get Spotify Catalog information about artists, albums, tracks or playlists that match a keyword string
-  async search(query, type = [], limit = 20, offset = 0) {
+  search = async (query, type = [], limit = 20, offset = 0) => {
     const data = {
       query,
       type,
@@ -19,7 +19,7 @@ class SearchService extends RequestService {
       throw new Error('offset must be a value between 0 and 10000');
     }
     return await this.makeRequest({ url: 'search', data });
-  }
+  };
 }
 
 export default SearchService;

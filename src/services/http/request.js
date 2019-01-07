@@ -16,8 +16,7 @@ class RequestService {
       const response = await axios[method](url, data);
       return response.data;
     } catch (e) {
-      console.log(e.message);
-      return Promise.reject(e);
+      return Promise.reject(e.response.data.error || e);
     }
   }
 }

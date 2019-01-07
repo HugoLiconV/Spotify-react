@@ -2,10 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import indexRoutes from './routes/index';
+import ErrorMessages from './ErrorMessages';
 
 const Root = ({ store }) => {
   return (
     <Provider store={store}>
+      <ErrorMessages />
       <Router>
         <Switch>
           {indexRoutes.map((prop, key) => {

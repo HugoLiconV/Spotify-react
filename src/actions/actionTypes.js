@@ -1,3 +1,7 @@
+/*  Error actions  */
+export const SHOW_ERROR = 'SHOW_ERROR';
+export const HIDE_ERROR = 'HIDE_ERROR';
+
 /*  User actions  */
 export const SAVE_TOKEN = 'SAVE_TOKEN';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
