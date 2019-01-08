@@ -18,5 +18,11 @@ export const saveItem = (key, value) => {
     } catch (err) {
       console.log(err);
     }
+  } else {
+    try {
+      localStorage.removeItem(key);
+    } catch (err) {
+      console.log(err);
+    }
   }
 };

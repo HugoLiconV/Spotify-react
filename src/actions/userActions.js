@@ -1,14 +1,14 @@
-import { GET_CURRENT_USER } from './actionTypes';
 import ProfileService from '../services/http/profile';
+import { GET_CURRENT_USER } from './actionTypes';
+import { errorHandler } from '../services/ErrorService';
+import { dispatchError } from './errorActions';
 
-export const getCurrentUser = () => dispatch => {
+export const getCurrentUser = () => async dispatch => {
   const profileService = new ProfileService();
-  profileService
-    .getCurrentProfile()
-    .then(user => {
-      dispatch({ type: GET_CURRENT_USER, payload: user });
-    })
-    .catch(e => {
-      console.log(e);
-    });
+  const wrapper = errorHandler(
+    profileService.getCurrentProfile,
+    dispatchError(dispatch)
+  );
+  const user = await wrapper();
+  user && dispatch({ type: GET_CURRENT_USER, payload: user });
 };

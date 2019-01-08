@@ -14,110 +14,115 @@ import {
   TRANSFER_PLAYBACK,
   SET_VOLUME
 } from './actionTypes';
+import { errorHandler } from '../services/ErrorService';
+import { dispatchError } from './errorActions';
 
 const playerService = new PlayerService();
 
-export const getRecentlyPlayed = (limit, before, after) => dispatch => {
-  playerService
-    .getRecentlyPlayed(limit, before, after)
-    .then(tracks => {
-      dispatch({ type: GET_RECENTLY_PLAYED, payload: tracks });
-    })
-    .catch(e => console.log(e));
+export const getRecentlyPlayed = (limit, before, after) => async dispatch => {
+  const wrapper = errorHandler(
+    playerService.getRecentlyPlayed,
+    dispatchError(dispatch)
+  );
+  const tracks = await wrapper(limit, before, after);
+  tracks && dispatch({ type: GET_RECENTLY_PLAYED, payload: tracks });
 };
 
-export const getPlayer = () => dispatch => {
-  playerService
-    .getPlayer()
-    .then(currentPlayback => {
-      dispatch({ type: GET_PLAYER, payload: currentPlayback });
-    })
-    .catch(e => console.log(e));
+export const getPlayer = () => async dispatch => {
+  const wrapper = errorHandler(
+    playerService.getPlayer,
+    dispatchError(dispatch)
+  );
+  const currentPlayback = await wrapper();
+  currentPlayback && dispatch({ type: GET_PLAYER, payload: currentPlayback });
 };
 
-export const getDevices = () => dispatch => {
-  playerService
-    .getDevices()
-    .then(devices => {
-      dispatch({ type: GET_DEVICES, payload: devices });
-    })
-    .catch(e => console.log(e));
+export const getDevices = () => async dispatch => {
+  const wrapper = errorHandler(
+    playerService.getDevices,
+    dispatchError(dispatch)
+  );
+  const devices = await wrapper();
+  devices && dispatch({ type: GET_DEVICES, payload: devices });
 };
 
 export const getCurrentlyPlaying = () => async dispatch => {
-  const track = await playerService.getCurrentlyPlaying();
-  dispatch({ type: GET_CURRENT_PLAYING, payload: track });
+  const wrapper = errorHandler(
+    playerService.getCurrentlyPlaying,
+    dispatchError(dispatch)
+  );
+  const track = await wrapper();
+  track && dispatch({ type: GET_CURRENT_PLAYING, payload: track });
 };
 
 export const nextSong = () => async dispatch => {
-  await playerService.next();
-  dispatch({ type: NEXT_SONG });
+  const wrapper = errorHandler(playerService.next, dispatchError(dispatch));
+  const res = await wrapper();
+  res && dispatch({ type: NEXT_SONG });
   setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
 
 export const previousSong = () => async dispatch => {
-  await playerService.previous();
-  dispatch({ type: PREVIOUS_SONG });
+  const wrapper = errorHandler(playerService.previous, dispatchError(dispatch));
+  const res = await wrapper();
+  res && dispatch({ type: PREVIOUS_SONG });
   setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
 
-export const pause = () => dispatch => {
-  playerService
-    .pause()
-    .then(_ => {
-      dispatch({ type: PAUSE });
-      setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
-    })
-    .catch(e => console.log(e));
+export const pause = () => async dispatch => {
+  const wrapper = errorHandler(playerService.pause(), dispatchError(dispatch));
+  const res = await wrapper();
+  res && dispatch({ type: PAUSE });
+  setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
 
-export const play = (contextUri, offset, position) => dispatch => {
-  playerService
-    .play(contextUri, offset, position)
-    .then(_ => {
-      dispatch({ type: PLAY });
-      setTimeout(() => dispatch(getCurrentlyPlaying()), 500);
-    })
-    .catch(e => console.log(e));
+export const play = (contextUri, offset, position) => async dispatch => {
+  const wrapper = errorHandler(playerService.play, dispatchError(dispatch));
+  const res = await wrapper(contextUri, offset, position);
+  res && dispatch({ type: PLAY });
+  setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
 
-export const setRepeat = state => dispatch => {
-  playerService.setRepeat(state).then(() => {
-    dispatch({ type: SET_REPEAT });
-    setTimeout(() => dispatch(getPlayer()), 300);
-  });
+export const setRepeat = state => async dispatch => {
+  const wrapper = errorHandler(
+    playerService.setRepeat,
+    dispatchError(dispatch)
+  );
+  const res = await wrapper(state);
+  res && dispatch({ type: SET_REPEAT });
+  setTimeout(() => dispatch(getPlayer()), 400);
 };
 
 export const seek = position_ms => dispatch => {
-  playerService
-    .seek(position_ms)
-    .then(_ => {
-      dispatch({ type: SEEK });
-    })
-    .catch(e => console.log(e));
+  const wrapper = errorHandler(playerService.seek, dispatchError(dispatch));
+  const res = wrapper(position_ms).seek(position_ms);
+  res && dispatch({ type: SEEK });
 };
 
 export const toggleShuffle = shuffle => async dispatch => {
-  playerService.toggleShuffle(shuffle);
-
-  dispatch({ type: TOGGLE_SHUFFLE });
-  setTimeout(() => dispatch(getPlayer()), 200);
+  const wrapper = errorHandler(
+    playerService.toggleShuffle,
+    dispatchError(dispatch)
+  );
+  const res = await wrapper(shuffle);
+  res && dispatch({ type: TOGGLE_SHUFFLE });
+  setTimeout(() => dispatch(getPlayer()), 400);
 };
 
-export const transferPlayback = deviceIds => dispatch => {
-  playerService
-    .transferPlayback(deviceIds)
-    .then(_ => {
-      dispatch({ type: TRANSFER_PLAYBACK });
-    })
-    .catch(e => console.log(e));
+export const transferPlayback = deviceIds => async dispatch => {
+  const wrapper = errorHandler(
+    playerService.transferPlayback,
+    dispatchError(dispatch)
+  );
+  const res = await wrapper(deviceIds);
+  res && dispatch({ type: TRANSFER_PLAYBACK });
 };
 
-export const setVolume = volumePercent => dispatch => {
-  playerService
-    .setVolume(volumePercent)
-    .then(_ => {
-      dispatch({ type: SET_VOLUME });
-    })
-    .catch(e => console.log(e));
+export const setVolume = volumePercent => async dispatch => {
+  const wrapper = errorHandler(
+    playerService.setVolume,
+    dispatchError(dispatch)
+  );
+  const res = await wrapper(volumePercent);
+  res && dispatch({ type: SET_VOLUME });
 };

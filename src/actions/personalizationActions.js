@@ -1,21 +1,23 @@
 import PersonalizationService from '../services/http/personalization';
 import { GET_USERS_TOP_ARTISTS, GET_USERS_TOP_TRACKS } from './actionTypes';
+import { dispatchError } from './errorActions';
+import { errorHandler } from '../services/ErrorService';
 
 const personalizationService = new PersonalizationService();
 
-export const getUsersTopArtists = () => dispatch => {
-  personalizationService
-    .getUsersTopArtists()
-    .then(artists => {
-      dispatch({ type: GET_USERS_TOP_ARTISTS, payload: artists });
-    })
-    .catch(e => console.log(e));
+export const getUsersTopArtists = () => async dispatch => {
+  const wrapper = errorHandler(
+    personalizationService.getUsersTopArtists,
+    dispatchError(dispatch)
+  );
+  const artists = await wrapper();
+  artists && dispatch({ type: GET_USERS_TOP_ARTISTS, payload: artists });
 };
-export const getUsersTopTracks = () => dispatch => {
-  personalizationService
-    .getUsersTopTracks()
-    .then(tracks => {
-      dispatch({ type: GET_USERS_TOP_TRACKS, payload: tracks });
-    })
-    .catch(e => console.log(e));
+export const getUsersTopTracks = () => async dispatch => {
+  const wrapper = errorHandler(
+    personalizationService.getUsersTopTracks,
+    dispatchError(dispatch)
+  );
+  const tracks = await wrapper();
+  tracks && dispatch({ type: GET_USERS_TOP_TRACKS, payload: tracks });
 };

@@ -8,7 +8,9 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middleware = [thunk];
 
 const initialState = {
-  token: loadItem('TOKEN')
+  token: {
+    token: loadItem('TOKEN')
+  }
 };
 
 const store = createStore(
