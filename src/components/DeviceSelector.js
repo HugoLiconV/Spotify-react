@@ -9,30 +9,22 @@ import Menu from '@material-ui/core/Menu';
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    maxWidth: 360
+    width: '100%'
+    // maxWidth: 360
   }
 });
-
-const options = [
-  'Show some love to Material-UI',
-  'Show all notification content',
-  'Hide sensitive notification content',
-  'Hide all notification content'
-];
-
 class DeviceSelector extends React.Component {
   state = {
-    anchorEl: null,
-    selectedIndex: 1
+    anchorEl: null
+  };
+
+  getActiveDevice = devices => {
+    if (devices.length < 0) return [];
+    return devices.filter(device => device.is_active)[0];
   };
 
   handleClickListItem = event => {
     this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index, anchorEl: null });
   };
 
   handleClose = () => {
@@ -42,7 +34,9 @@ class DeviceSelector extends React.Component {
   render() {
     const { classes } = this.props;
     const { anchorEl } = this.state;
-
+    const devices = this.props.devices;
+    const activeDevice = this.getActiveDevice(devices);
+    const deviceName = activeDevice ? activeDevice.name : 'No device selected';
     return (
       <div className={classes.root}>
         <List component="nav">
@@ -53,10 +47,7 @@ class DeviceSelector extends React.Component {
             aria-label="Device"
             onClick={this.handleClickListItem}
           >
-            <ListItemText
-              primary="Device"
-              secondary={options[this.state.selectedIndex]}
-            />
+            <ListItemText primary="Device" secondary={deviceName} />
           </ListItem>
         </List>
         <Menu
@@ -65,14 +56,17 @@ class DeviceSelector extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          {options.map((option, index) => (
+          {devices.map((device, index) => (
             <MenuItem
-              key={option}
-              disabled={index === 0}
-              selected={index === this.state.selectedIndex}
-              onClick={event => this.handleMenuItemClick(event, index)}
+              key={device.id}
+              selected={activeDevice.id === device.id}
+              onClick={() => {
+                const selectedId = devices[index].id;
+                this.props.onDeviceSelected(selectedId);
+                this.setState({ anchorEl: null });
+              }}
             >
-              {option}
+              {device.name}
             </MenuItem>
           ))}
         </Menu>
@@ -82,7 +76,8 @@ class DeviceSelector extends React.Component {
 }
 
 DeviceSelector.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  devices: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(DeviceSelector);
