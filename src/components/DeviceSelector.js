@@ -10,7 +10,6 @@ import Menu from '@material-ui/core/Menu';
 const styles = theme => ({
   root: {
     width: '100%'
-    // maxWidth: 360
   }
 });
 class DeviceSelector extends React.Component {
@@ -19,8 +18,11 @@ class DeviceSelector extends React.Component {
   };
 
   getActiveDevice = devices => {
-    if (devices.length < 0) return [];
-    return devices.filter(device => device.is_active)[0];
+    const activeDevice = devices.filter(device => device.is_active);
+    if (activeDevice.length > 0) {
+      return activeDevice[0];
+    }
+    return {};
   };
 
   handleClickListItem = event => {
@@ -31,12 +33,18 @@ class DeviceSelector extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  isObjectEmpty = obj => {
+    return Object.keys(obj).length === 0;
+  };
+
   render() {
     const { classes } = this.props;
     const { anchorEl } = this.state;
     const devices = this.props.devices;
     const activeDevice = this.getActiveDevice(devices);
-    const deviceName = activeDevice ? activeDevice.name : 'No device selected';
+    const deviceName = this.isObjectEmpty(activeDevice)
+      ? 'No device selected'
+      : activeDevice.name;
     return (
       <div className={classes.root}>
         <List component="nav">
