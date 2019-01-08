@@ -18,7 +18,8 @@ import {
   pause,
   play,
   setRepeat,
-  toggleShuffle
+  toggleShuffle,
+  transferPlayback
 } from '../actions/playerActions';
 
 const currentPlayback = {
@@ -90,7 +91,20 @@ export class PlayingNow extends Component {
   componentDidMount() {
     this.getPlayer();
     this.currentlyPlaying();
+    this.getDevices();
   }
+
+  onDeviceSelected = id => {
+    this.transferPlayback([id]);
+  };
+
+  transferPlayback = ids => {
+    this.props.transferPlayback(ids);
+  };
+
+  getDevices = () => {
+    this.props.getDevices();
+  };
 
   getPlayer = () => {
     this.props.getPlayer();
@@ -169,13 +183,14 @@ export class PlayingNow extends Component {
   render() {
     const currentlyPlaying = this.props.currentlyPlaying;
     const player = this.props.player;
+    const devices = this.props.devices;
 
     if (this.isObjectEmpty(currentlyPlaying) || this.isObjectEmpty(player))
       return 'Nothing is playing';
     const { device } = player;
     const { artists, album, name } = currentlyPlaying.item;
     return (
-      <GridContainer justify="center" style={center}>
+      <GridContainer justify="center" style={center} alignItems="center">
         <GridItem xs={12} sm={12} md={6}>
           <Cover src={album.images[0].url} title={album.name} />
           <MediaControls
@@ -197,7 +212,10 @@ export class PlayingNow extends Component {
             <h3 className="song-title">{name}</h3>
             <h4 className="song-artist">{artists.map(this.renderNames)}</h4>
           </div>
-          <DeviceSelector />
+          <DeviceSelector
+            devices={devices}
+            onDeviceSelected={this.onDeviceSelected}
+          />
           <VolumeControl
             onVolumeChange={this.onVolumeChange}
             volume={device.volume_percent}
@@ -218,13 +236,15 @@ PlayingNow.defaultProps = {
 
 PlayingNow.propTypes = {
   currentlyPlaying: PropTypes.object.isRequired,
-  player: PropTypes.object.isRequired
+  player: PropTypes.object.isRequired,
+  devices: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     currentlyPlaying: state.player.currentlyPlaying,
-    player: state.player.player
+    player: state.player.player,
+    devices: state.player.devices
   };
 };
 
@@ -238,7 +258,8 @@ const mapDispatchToProps = {
   pause,
   play,
   setRepeat,
-  toggleShuffle
+  toggleShuffle,
+  transferPlayback
 };
 
 export default connect(

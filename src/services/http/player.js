@@ -70,7 +70,7 @@ class PlayerService extends RequestService {
   transferPlayback = async device_ids => {
     const data = { device_ids };
     return await this.makeRequest({
-      url: '/me/player/player',
+      url: '/me/player',
       method: 'put',
       data
     });

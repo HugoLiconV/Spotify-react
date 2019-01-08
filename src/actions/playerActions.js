@@ -43,7 +43,7 @@ export const getDevices = () => async dispatch => {
     dispatchError(dispatch)
   );
   const devices = await wrapper();
-  devices && dispatch({ type: GET_DEVICES, payload: devices });
+  devices && dispatch({ type: GET_DEVICES, payload: devices.devices });
 };
 
 export const getCurrentlyPlaying = () => async dispatch => {
@@ -114,8 +114,9 @@ export const transferPlayback = deviceIds => async dispatch => {
     playerService.transferPlayback,
     dispatchError(dispatch)
   );
-  const res = await wrapper(deviceIds);
-  res && dispatch({ type: TRANSFER_PLAYBACK });
+  await wrapper(deviceIds);
+  dispatch({ type: TRANSFER_PLAYBACK });
+  setTimeout(() => dispatch(getDevices()), 800);
 };
 
 export const setVolume = volumePercent => async dispatch => {
