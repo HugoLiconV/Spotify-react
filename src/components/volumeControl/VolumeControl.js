@@ -7,9 +7,10 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import './VolumeControl.css';
 
 class VolumeControl extends React.Component {
-  state = {
-    value: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = { value: this.props.volume };
+  }
 
   onChange = event => {
     const value = event.target.value;
@@ -20,14 +21,9 @@ class VolumeControl extends React.Component {
     this.props.onVolumeChange(this.state.value);
   };
 
-  componentDidMount() {
-    this.setState({ value: this.props.volume });
-  }
-
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className="root">
         <IconButton aria-label="Volume Down">
           <VolumeMuteIcon />
         </IconButton>
@@ -52,7 +48,6 @@ class VolumeControl extends React.Component {
 }
 
 VolumeControl.propTypes = {
-  classes: PropTypes.object.isRequired,
   onVolumeChange: PropTypes.func.isRequired,
   volume: PropTypes.number.isRequired
 };

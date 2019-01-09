@@ -70,7 +70,7 @@ export const previousSong = () => async dispatch => {
 };
 
 export const pause = () => async dispatch => {
-  const wrapper = errorHandler(playerService.pause(), dispatchError(dispatch));
+  const wrapper = errorHandler(playerService.pause, dispatchError(dispatch));
   const res = await wrapper();
   res && dispatch({ type: PAUSE });
   setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
@@ -126,5 +126,5 @@ export const setVolume = volumePercent => async dispatch => {
   );
   const res = await wrapper(volumePercent);
   res && dispatch({ type: SET_VOLUME });
-  setTimeout(() => dispatch(getPlayer()));
+  dispatch(getPlayer());
 };
