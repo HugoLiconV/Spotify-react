@@ -1,46 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-
-const styles = {
-  root: {
-    width: 300,
-    display: 'flex'
-  },
-  slider: {
-    padding: '22px 0px'
-  },
-  blue: {
-    backgroundColor: '#00acc1',
-    margin: 0
-  },
-  track: {
-    margin: 0
-  }
-};
+// It doesn't uss Css in JS because we needed to use a pseudo selector
+import './VolumeControl.css';
 
 class VolumeControl extends React.Component {
-  render() {
-    const { classes } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = { value: this.props.volume };
+  }
 
+  onChange = event => {
+    const value = event.target.value;
+    this.setState({ value: value });
+  };
+
+  onDragEnd = () => {
+    this.props.onVolumeChange(this.state.value);
+  };
+
+  render() {
     return (
-      <div className={classes.root}>
+      <div className="root">
         <IconButton aria-label="Volume Down">
           <VolumeMuteIcon />
         </IconButton>
-        <div className="slidecontainer">
-          {this.props.volume}
+        <div className="container">
           <input
+            className="slider"
             type="range"
             min="0"
             max="100"
             step="10"
-            onChange={this.props.onVolumeChange}
-            value={this.props.volume}
-            id="myRange"
+            onMouseUp={this.onDragEnd}
+            onChange={this.onChange}
+            value={this.state.value}
           />
         </div>
         <IconButton aria-label="Volume Up">
@@ -52,9 +48,8 @@ class VolumeControl extends React.Component {
 }
 
 VolumeControl.propTypes = {
-  classes: PropTypes.object.isRequired,
   onVolumeChange: PropTypes.func.isRequired,
   volume: PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(VolumeControl);
+export default VolumeControl;
