@@ -6,7 +6,7 @@ import GridContainer from '../components/Grid/GridContainer';
 import GridItem from '../components/Grid/GridItem';
 import AlbumsList from '../components/AlbumsList';
 import DeviceSelector from '../components/DeviceSelector';
-import VolumeControl from '../components/VolumeControl';
+import VolumeControl from '../components/volumeControl/VolumeControl';
 import PropTypes from 'prop-types';
 import {
   getCurrentlyPlaying,
@@ -121,8 +121,8 @@ export class PlayingNow extends Component {
     this.props.previousSong();
   };
 
-  onVolumeChange = event => {
-    this.props.setVolume(event.target.value);
+  onVolumeChange = value => {
+    this.props.setVolume(value);
   };
 
   onShuffleClick = () => {

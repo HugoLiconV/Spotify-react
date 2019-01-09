@@ -126,4 +126,5 @@ export const setVolume = volumePercent => async dispatch => {
   );
   const res = await wrapper(volumePercent);
   res && dispatch({ type: SET_VOLUME });
+  setTimeout(() => dispatch(getPlayer()));
 };
