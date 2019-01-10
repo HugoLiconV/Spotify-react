@@ -4,7 +4,6 @@ import Cover from '../components/Cover';
 import MediaControls from '../components/MediaControls';
 import GridContainer from '../components/Grid/GridContainer';
 import GridItem from '../components/Grid/GridItem';
-import AlbumsList from '../components/AlbumsList';
 import DeviceSelector from '../components/DeviceSelector';
 import VolumeControl from '../components/volumeControl/VolumeControl';
 import PropTypes from 'prop-types';
@@ -19,8 +18,12 @@ import {
   play,
   setRepeat,
   toggleShuffle,
-  transferPlayback
+  transferPlayback,
+  getRecentlyPlayed
 } from '../actions/playerActions';
+import SingleLineGridList from '../components/Grid/GridList';
+import { imagesSizes, repeatStates } from '../constants';
+import noImageFound from '../assets/img/no_image_found.png';
 
 const currentPlayback = {
   item: {
@@ -85,14 +88,17 @@ const center = {
 const left = {
   textAlign: 'left'
 };
-
-const repeatStates = ['off', 'context', 'track'];
 export class PlayingNow extends Component {
   componentDidMount() {
     this.getPlayer();
     this.currentlyPlaying();
     this.getDevices();
+    this.getRecentlyPlayed();
   }
+
+  getRecentlyPlayed = (limit, before, after) => {
+    this.props.getRecentlyPlayed(limit, before, after);
+  };
 
   onDeviceSelected = id => {
     this.transferPlayback([id]);
@@ -180,10 +186,27 @@ export class PlayingNow extends Component {
     }
   };
 
+  getAlbumImageAndTrackTitle = tracks => {
+    if (!tracks || tracks.length === 0) return [];
+    return tracks.map(track => {
+      const { name: title, album } = track;
+      const images = album.images.filter(img => {
+        return img.width === imagesSizes.medium;
+      });
+      const imgUrl = images.length === 0 ? noImageFound : images[0].url;
+      return {
+        title,
+        imgUrl
+      };
+    });
+  };
+
   render() {
     const currentlyPlaying = this.props.currentlyPlaying;
     const player = this.props.player;
     const devices = this.props.devices;
+    const { items } = this.props.recentlyPlayed;
+    const tracks = items && items.map(item => item.track);
 
     if (this.isObjectEmpty(currentlyPlaying) || this.isObjectEmpty(player))
       return 'Nothing is playing';
@@ -223,7 +246,7 @@ export class PlayingNow extends Component {
         </GridItem>
         <GridItem xs={12} sm={12} md={12} style={left}>
           <h2>Recently Played</h2>
-          <AlbumsList />
+          <SingleLineGridList data={this.getAlbumImageAndTrackTitle(tracks)} />
         </GridItem>
       </GridContainer>
     );
@@ -241,10 +264,12 @@ PlayingNow.propTypes = {
 };
 
 const mapStateToProps = state => {
+  const { currentlyPlaying, player, devices, recentlyPlayed } = state.player;
   return {
-    currentlyPlaying: state.player.currentlyPlaying,
-    player: state.player.player,
-    devices: state.player.devices
+    currentlyPlaying,
+    player,
+    devices,
+    recentlyPlayed
   };
 };
 
@@ -259,7 +284,8 @@ const mapDispatchToProps = {
   play,
   setRepeat,
   toggleShuffle,
-  transferPlayback
+  transferPlayback,
+  getRecentlyPlayed
 };
 
 export default connect(

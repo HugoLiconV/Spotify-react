@@ -19,7 +19,11 @@ import { dispatchError } from './errorActions';
 
 const playerService = new PlayerService();
 
-export const getRecentlyPlayed = (limit, before, after) => async dispatch => {
+export const getRecentlyPlayed = (
+  limit = 20,
+  before = Date.now(),
+  after = null
+) => async dispatch => {
   const wrapper = errorHandler(
     playerService.getRecentlyPlayed,
     dispatchError(dispatch)
