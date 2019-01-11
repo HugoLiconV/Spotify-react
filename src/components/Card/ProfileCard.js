@@ -5,6 +5,7 @@ import CardAvatar from './CardAvatar';
 import CardBody from './CardBody';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import noImageFound from '../../assets/img/no_image_found.png';
 
 const styles = {
   details: {
@@ -39,13 +40,21 @@ const currentUser = {
   id: 'hugofernandoliconvalenzuela'
 };
 
+const getProfilePicture = currentUser => {
+  if (currentUser.images.length === 0) return noImageFound;
+  return currentUser.images[0].url;
+};
 export const ProfileCard = props => {
   const { currentUser, classes } = props;
   return (
     <Card profile>
       <CardAvatar profile>
         <a href={currentUser.external_urls.spotify}>
-          <img src={currentUser.images[0].url} alt={currentUser.display_name} />
+          <img
+            style={{ backgroundColor: 'white' }}
+            src={getProfilePicture(currentUser)}
+            alt={currentUser.display_name}
+          />
         </a>
       </CardAvatar>
       <CardBody profile>
