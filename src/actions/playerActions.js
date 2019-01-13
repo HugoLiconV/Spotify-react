@@ -132,3 +132,17 @@ export const setVolume = volumePercent => async dispatch => {
   res && dispatch({ type: SET_VOLUME });
   dispatch(getPlayer());
 };
+
+let timer;
+export const pollingPlayerState = isPolling => dispatch => {
+  if (isPolling) {
+    timer = setInterval(() => {
+      dispatch(getPlayer());
+      dispatch(getCurrentlyPlaying());
+      dispatch(getDevices());
+      dispatch(getRecentlyPlayed());
+    }, 500);
+  } else {
+    clearInterval(timer);
+  }
+};

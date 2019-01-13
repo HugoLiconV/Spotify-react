@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
@@ -6,19 +6,19 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 // It doesn't uss Css in JS because we needed to use a pseudo selector
 import './VolumeControl.css';
 
-class VolumeControl extends React.Component {
+class VolumeControl extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.volume };
+    this.state = { volume: this.props.volume };
   }
 
   onChange = event => {
     const value = event.target.value;
-    this.setState({ value: value });
+    this.setState({ volume: value });
   };
 
   onDragEnd = () => {
-    this.props.onVolumeChange(this.state.value);
+    this.props.onVolumeChange(this.state.volume);
   };
 
   render() {
@@ -36,7 +36,7 @@ class VolumeControl extends React.Component {
             step="10"
             onMouseUp={this.onDragEnd}
             onChange={this.onChange}
-            value={this.state.value}
+            value={this.state.volume}
           />
         </div>
         <IconButton aria-label="Volume Up">
