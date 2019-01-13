@@ -8,6 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import dashboardStyle from '../assets/styles/layouts/dashboardStyle';
 import { loadItem } from '../services/localStorage';
 import LoginSpotify from '../views/LoginSpotify';
+import Header from '../components/Header/Header';
 
 const switchRoutes = (
   <Switch>
@@ -20,14 +21,35 @@ const switchRoutes = (
 );
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobileOpen: false
+    };
+  }
+
+  handleDrawerToggle = () => {
+    this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
+
   render() {
     const token = loadItem('TOKEN');
     const { classes, ...rest } = this.props;
     if (token !== undefined) {
       return (
         <div className={classes.wrapper}>
-          <SideBar routes={appRoutes} {...rest} />
+          <SideBar
+            routes={appRoutes}
+            handleDrawerToggle={this.handleDrawerToggle}
+            open={this.state.mobileOpen}
+            {...rest}
+          />
           <div className={classes.mainPanel}>
+            <Header
+              routes={appRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              {...rest}
+            />
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>
             </div>
