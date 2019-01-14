@@ -49,16 +49,34 @@ const SideBar = props => {
   );
 
   return (
-    <Hidden smDown implementation="css">
-      <Drawer
-        anchor="left"
-        variant="permanent"
-        open
-        classes={{ paper: classes.drawerPaper }}
-      >
-        <div className={classes.SideBarWrapper}>{links}</div>
-      </Drawer>
-    </Hidden>
+    <div>
+      <Hidden mdUp implementation="css">
+        <Drawer
+          variant="temporary"
+          anchor="right"
+          open={props.open}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          onClose={props.handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+        >
+          <div className={classes.sidebarWrapper}>{links}</div>
+        </Drawer>
+      </Hidden>
+      <Hidden smDown implementation="css">
+        <Drawer
+          anchor="left"
+          variant="permanent"
+          open
+          classes={{ paper: classes.drawerPaper }}
+        >
+          <div className={classes.SideBarWrapper}>{links}</div>
+        </Drawer>
+      </Hidden>
+    </div>
   );
 };
 

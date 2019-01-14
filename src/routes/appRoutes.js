@@ -38,8 +38,8 @@ const appRoutes = [
     navbarName: 'Profile',
     icon: Person,
     component: Profile
-  }
-  // { redirect: true, path: '/', to: '/playing', navbarName: 'Redirect' }
+  },
+  { redirect: true, path: '/', to: '/playing', navbarName: 'Redirect' }
 ];
 
 export default appRoutes;
