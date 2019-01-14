@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { search } from '../actions/searchActions';
 import { withStyles } from '@material-ui/core/styles';
+import { areArraysEmpty } from '../services/utils';
 
 const styles = theme => ({
   container: {
@@ -38,7 +39,7 @@ class Search extends Component {
     const filteredImages = images.filter(
       ({ width }) => width > minSize && width < maxSize
     );
-    return filteredImages.length === 0 ? images[0].url : images[0].url;
+    return filteredImages.length === 0 ? images[0].url : filteredImages[0].url;
   };
 
   /**
@@ -73,12 +74,6 @@ class Search extends Component {
     this.search(searchQuery, ['album', 'track', 'artist']);
   };
 
-  areArraysEmpty = arrays => {
-    return arrays.every(array => {
-      return !array || array.length === 0;
-    });
-  };
-
   render() {
     const { classes } = this.props;
     const { albums, artists, tracks } = this.props.results;
@@ -105,7 +100,7 @@ class Search extends Component {
             <SearchIcon />
           </Button>
         </form>
-        {this.areArraysEmpty([albumItems, artistItems, trackItems]) ? (
+        {areArraysEmpty([albumItems, artistItems, trackItems]) ? (
           <h3>No Search Results</h3>
         ) : (
           <div>
