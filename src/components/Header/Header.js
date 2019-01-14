@@ -11,14 +11,10 @@ import headerStyle from '../../assets/styles/components/headerStyle';
 
 const Header = ({ ...props }) => {
   const makeBrand = () => {
-    let name;
-    props.routes.map(prop => {
-      if (prop.path === props.location.pathname) {
-        name = prop.navbarName;
-      }
-      return null;
-    });
-    return name;
+    const name = props.routes.find(
+      prop => prop.path === props.location.pathname
+    );
+    return name.sidebarName;
   };
   const { classes } = props;
   return (
