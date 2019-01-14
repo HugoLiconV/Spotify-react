@@ -141,7 +141,7 @@ export const pollingPlayerState = isPolling => dispatch => {
       dispatch(getCurrentlyPlaying());
       dispatch(getDevices());
       dispatch(getRecentlyPlayed());
-    }, 500);
+    }, 1500);
   } else {
     clearInterval(timer);
   }
