@@ -35,19 +35,22 @@ export const getCategories = () => async dispatch => {
   const categories = await wrapper();
   categories && dispatch({ type: GET_CATEGORIES, payload: categories });
 };
-export const getFeaturedPlaylists = () => async dispatch => {
+export const getFeaturedPlaylists = (
+  limit = 20,
+  offset = 0
+) => async dispatch => {
   const wrapper = errorHandler(
     browseService.getFeaturedPlaylists,
     dispatchError(dispatch)
   );
-  const playlists = await wrapper();
+  const playlists = await wrapper(limit, offset);
   playlists && dispatch({ type: GET_FEATUREDPLAYLISTS, payload: playlists });
 };
-export const getNewReleases = () => async dispatch => {
+export const getNewReleases = (limit = 20, offset = 0) => async dispatch => {
   const wrapper = errorHandler(
     browseService.getNewReleases,
     dispatchError(dispatch)
   );
-  const albums = await wrapper();
+  const albums = await wrapper(limit, offset);
   albums && dispatch({ type: GET_NEW_RELEASES, payload: albums });
 };
