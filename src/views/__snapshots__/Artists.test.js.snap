@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Artist /> component should match the snapshot 1`] = `
+<div>
+  <div
+    alt="Arctic Monkeys"
+    className="coverImage"
+    style={
+      Object {
+        "background": "url('a.png')",
+      }
+    }
+  >
+    <h1
+      className="text artistName"
+    >
+      Arctic Monkeys
+    </h1>
+    <h4
+      className="text followers"
+    >
+      Followers: 
+      7,216,088
+    </h4>
+  </div>
+  <GridContainer
+    alignItems="center"
+    justify="flex-start"
+  >
+    <WithStyles(GridItem)
+      md={6}
+      sm={12}
+      xs={12}
+    >
+      <WithStyles(SongTable)
+        songs={Array []}
+        tableTitle="Top Tracks"
+      />
+    </WithStyles(GridItem)>
+    <WithStyles(GridItem)
+      md={6}
+      sm={12}
+      xs={12}
+    >
+      <h3>
+        Related Artists
+      </h3>
+      <WithStyles(WithTheme(WithWidth(SingleLineGridList)))
+        data={Array []}
+        lg={3}
+      />
+    </WithStyles(GridItem)>
+    <WithStyles(GridItem)
+      md={12}
+      sm={12}
+      xs={12}
+    >
+      <h3>
+        Albums
+      </h3>
+      <WithStyles(WithTheme(WithWidth(SingleLineGridList)))
+        data={Array []}
+        grid={true}
+        lg={4}
+      />
+    </WithStyles(GridItem)>
+  </GridContainer>
+</div>
+`;
