@@ -7,9 +7,9 @@ import {
 
 const initialState = {
   artist: {},
-  artistsAlbums: [],
+  artistsAlbums: {},
   artistsTopTracks: [],
-  artistRelatedArtists: []
+  artistRelatedArtists: {}
 };
 
 const artist = (state = initialState, action) => {

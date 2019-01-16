@@ -16,12 +16,12 @@ import SideBarStyle from '../assets/styles/components/sidebarStyle';
 const SideBar = props => {
   const { classes, routes } = props;
   const activeRoute = routeName =>
-    props.location.pathname.indexOf(routeName) > -1 ? true : false;
+    props.location.pathname.indexOf(routeName) > -1;
 
   const links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        if (prop.redirect) return null;
+        if (!prop.showInSidebar) return null;
         const listItemClasses = classNames({
           [' ' + classes.blue]: activeRoute(prop.path)
         });

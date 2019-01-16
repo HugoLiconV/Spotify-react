@@ -34,7 +34,7 @@ export const getArtistsTopTracks = id => async dispatch => {
     dispatchError(dispatch)
   );
   const tracks = await wrapper(id);
-  tracks && dispatch({ type: GET_ARTISTS_TOP_TRACKS, payload: tracks });
+  tracks && dispatch({ type: GET_ARTISTS_TOP_TRACKS, payload: tracks.tracks });
 };
 
 export const getArtistsRelatedArtists = id => async dispatch => {
