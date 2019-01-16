@@ -9,10 +9,12 @@ import PlayingNow from '../views/PlayingNow';
 import ExploreComp from '../views/Explore';
 import SearchComp from '../views/Search';
 import Profile from '../views/Profile';
+import Artist from '../views/Artist';
 
 const appRoutes = [
   {
     path: '/playing',
+    showInSidebar: true,
     sidebarName: 'Playing Now',
     navbarName: 'Playing Now',
     icon: LibraryMusic,
@@ -20,6 +22,7 @@ const appRoutes = [
   },
   {
     path: '/explore',
+    showInSidebar: true,
     sidebarName: 'Explore',
     navbarName: 'Explore',
     icon: Explore,
@@ -27,6 +30,7 @@ const appRoutes = [
   },
   {
     path: '/search',
+    showInSidebar: true,
     sidebarName: 'Search',
     navbarName: 'Search',
     icon: Search,
@@ -34,12 +38,26 @@ const appRoutes = [
   },
   {
     path: '/me',
+    showInSidebar: true,
     sidebarName: 'Profile',
     navbarName: 'Profile',
     icon: Person,
     component: Profile
   },
-  { redirect: true, path: '/', to: '/playing', navbarName: 'Redirect' }
+  {
+    path: '/artist/:id',
+    showInSidebar: false,
+    sidebarName: 'Artist',
+    navbarName: 'Artist',
+    component: Artist
+  },
+  {
+    redirect: true,
+    showInSidebar: false,
+    path: '/',
+    to: '/playing',
+    navbarName: 'Redirect'
+  }
 ];
 
 export default appRoutes;

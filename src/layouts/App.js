@@ -32,6 +32,10 @@ class App extends Component {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
+  noMargin() {
+    return this.props.location.pathname.match(`/artist/.?`) !== null;
+  }
+
   render() {
     const token = loadItem('TOKEN');
     const { classes, ...rest } = this.props;
@@ -45,14 +49,20 @@ class App extends Component {
             {...rest}
           />
           <div className={classes.mainPanel}>
-            <Header
-              routes={appRoutes}
-              handleDrawerToggle={this.handleDrawerToggle}
-              {...rest}
-            />
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
-            </div>
+            {this.noMargin() ? (
+              <div>{switchRoutes}</div>
+            ) : (
+              <div>
+                <Header
+                  routes={appRoutes}
+                  handleDrawerToggle={this.handleDrawerToggle}
+                  {...rest}
+                />
+                <div className={classes.content}>
+                  <div className={classes.container}>{switchRoutes}</div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       );

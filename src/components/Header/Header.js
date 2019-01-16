@@ -14,7 +14,7 @@ const Header = ({ ...props }) => {
     const name = props.routes.find(
       prop => prop.path === props.location.pathname
     );
-    return name.sidebarName;
+    return (name && name.sidebarName) || '';
   };
   const { classes } = props;
   return (

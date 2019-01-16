@@ -5,8 +5,11 @@ const style = {
   boxShadow: 'rgba(118, 143, 255, 0.1) 0px 16px 24px 0px',
   borderRadius: '4.5px'
 };
-const Cover = ({ src }, title) => {
-  return <img src={src} alt={title} style={style} />;
+const Cover = ({ src, title, width }) => {
+  const overrideWidth = width ? width : style.width;
+  return (
+    <img src={src} alt={title} style={{ ...style, width: overrideWidth }} />
+  );
 };
 
 export default Cover;

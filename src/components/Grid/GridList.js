@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import GridList from '@material-ui/core/GridList';
@@ -33,25 +34,30 @@ const styles = theme => ({
 
 function SingleLineGridList(props) {
   const { classes, data } = props;
+
   const getGridListCols = () => {
     if (isWidthUp('xl', props.width)) {
-      return 4;
+      return props.xl || 4;
     } else if (isWidthUp('lg', props.width)) {
-      return 3;
+      return props.lg || 3;
     } else if (isWidthUp('md', props.width)) {
-      return 2;
+      return props.md || 2;
     } else if (isWidthUp('sm', props.width)) {
-      return 2;
+      return props.sm || 2;
     } else {
       return 1;
     }
   };
 
+  const gridClasses = classNames({
+    [classes.gridList]: !props.grid
+  });
+
   if (data.length === 0) return <h3>No items</h3>;
   return (
     <div className={classes.root}>
       <GridList
-        className={classes.gridList}
+        className={gridClasses}
         spacing={10}
         cols={getGridListCols()}
         cellHeight={300}
@@ -75,6 +81,11 @@ function SingleLineGridList(props) {
 
 SingleLineGridList.propTypes = {
   classes: PropTypes.object.isRequired,
+  grid: PropTypes.bool,
+  xl: PropTypes.number,
+  lg: PropTypes.number,
+  md: PropTypes.number,
+  sm: PropTypes.number,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
