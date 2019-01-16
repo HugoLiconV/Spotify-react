@@ -8,18 +8,15 @@ import DeviceSelector from '../components/DeviceSelector';
 import VolumeControl from '../components/volumeControl/VolumeControl';
 import PropTypes from 'prop-types';
 import {
-  getCurrentlyPlaying,
+  pollingPlayerState,
   nextSong,
   previousSong,
-  getPlayer,
   setVolume,
-  getDevices,
   pause,
   play,
   setRepeat,
   toggleShuffle,
-  transferPlayback,
-  getRecentlyPlayed
+  transferPlayback
 } from '../actions/playerActions';
 import SingleLineGridList from '../components/Grid/GridList';
 import { imagesSizes, repeatStates } from '../constants';
@@ -90,14 +87,15 @@ const left = {
 };
 export class PlayingNow extends Component {
   componentDidMount() {
-    this.getPlayer();
-    this.currentlyPlaying();
-    this.getDevices();
-    this.getRecentlyPlayed();
+    this.pollingPlayerState(true);
   }
 
-  getRecentlyPlayed = (limit, before, after) => {
-    this.props.getRecentlyPlayed(limit, before, after);
+  componentWillUnmount() {
+    this.pollingPlayerState(false);
+  }
+
+  pollingPlayerState = isPolling => {
+    this.props.pollingPlayerState(isPolling);
   };
 
   onDeviceSelected = id => {
@@ -106,17 +104,6 @@ export class PlayingNow extends Component {
 
   transferPlayback = ids => {
     this.props.transferPlayback(ids);
-  };
-
-  getDevices = () => {
-    this.props.getDevices();
-  };
-
-  getPlayer = () => {
-    this.props.getPlayer();
-  };
-  currentlyPlaying = () => {
-    this.props.getCurrentlyPlaying();
   };
 
   nextSong = () => {
@@ -150,6 +137,7 @@ export class PlayingNow extends Component {
   resume = (contextUri, offset, position) => {
     this.props.play(contextUri, offset, position);
   };
+
   onRepeatClick = (states, currentState) => {
     const index = states.indexOf(currentState);
     const nextStateIndex = (index + 1) % states.length;
@@ -274,18 +262,15 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  getCurrentlyPlaying,
   nextSong,
-  getPlayer,
   previousSong,
   setVolume,
-  getDevices,
   pause,
   play,
   setRepeat,
   toggleShuffle,
   transferPlayback,
-  getRecentlyPlayed
+  pollingPlayerState
 };
 
 export default connect(

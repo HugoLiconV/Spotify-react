@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
@@ -16,55 +16,58 @@ const style = {
   }
 };
 
-export const MediaControls = props => {
-  const {
-    classes,
-    shuffle,
-    isPlaying,
-    repeatState,
-    nextSong,
-    previousSong,
-    onShuffleClick,
-    onPauseClick
-  } = props;
-  return (
-    <div>
-      <IconButton
-        aria-label="Shuffle"
-        className={shuffle ? classes.blue : ''}
-        onClick={onShuffleClick}
-      >
-        <ShuffleIcon id="shuffle" />
-      </IconButton>
-      <IconButton aria-label="Previous" onClick={previousSong}>
-        <SkipPreviousIcon id="previous" />
-      </IconButton>
-      <IconButton
-        aria-label={isPlaying ? 'Pause' : 'Play'}
-        onClick={onPauseClick}
-      >
-        {isPlaying ? <PauseIcon id="pause" /> : <PlayIcon id="play" />}
-      </IconButton>
-      <IconButton aria-label="Next" onClick={nextSong}>
-        <SkipNextIcon id="next" />
-      </IconButton>
-      {/*Repeat: context, track, off*/}
-      <IconButton
-        onClick={props.onRepeatClick}
-        aria-label="Repeat"
-        className={repeatState !== 'off' ? classes.blue : ''}
-      >
-        {repeatState === 'context' ? (
-          <RepeatIcon id="repeat" />
-        ) : repeatState === 'track' ? (
-          <RepeatOneIcon id="repeat" />
-        ) : (
-          <RepeatIcon id="repeat" />
-        )}
-      </IconButton>
-    </div>
-  );
-};
+export class MediaControls extends PureComponent {
+  render() {
+    const {
+      classes,
+      shuffle,
+      isPlaying,
+      repeatState,
+      nextSong,
+      previousSong,
+      onShuffleClick,
+      onPauseClick,
+      onRepeatClick
+    } = this.props;
+    return (
+      <div>
+        <IconButton
+          aria-label="Shuffle"
+          className={shuffle ? classes.blue : ''}
+          onClick={onShuffleClick}
+        >
+          <ShuffleIcon id="shuffle" />
+        </IconButton>
+        <IconButton aria-label="Previous" onClick={previousSong}>
+          <SkipPreviousIcon id="previous" />
+        </IconButton>
+        <IconButton
+          aria-label={isPlaying ? 'Pause' : 'Play'}
+          onClick={onPauseClick}
+        >
+          {isPlaying ? <PauseIcon id="pause" /> : <PlayIcon id="play" />}
+        </IconButton>
+        <IconButton aria-label="Next" onClick={nextSong}>
+          <SkipNextIcon id="next" />
+        </IconButton>
+        {/*Repeat: context, track, off*/}
+        <IconButton
+          onClick={onRepeatClick}
+          aria-label="Repeat"
+          className={repeatState !== 'off' ? classes.blue : ''}
+        >
+          {repeatState === 'context' ? (
+            <RepeatIcon id="repeat" />
+          ) : repeatState === 'track' ? (
+            <RepeatOneIcon id="repeat" />
+          ) : (
+            <RepeatIcon id="repeat" />
+          )}
+        </IconButton>
+      </div>
+    );
+  }
+}
 
 MediaControls.propTypes = {
   nextSong: PropTypes.func.isRequired,
