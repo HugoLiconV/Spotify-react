@@ -4,8 +4,8 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  topArtists: [],
-  topTracks: []
+  topArtists: {},
+  topTracks: {}
 };
 
 const personalization = (state = initialState, action) => {

@@ -9,9 +9,6 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: 'transparent'
   },
@@ -48,12 +45,12 @@ function SingleLineGridList(props) {
       return 1;
     }
   };
-
+  
   const gridClasses = classNames({
     [classes.gridList]: !props.grid
   });
 
-  if (data.length === 0) return <h3>No items</h3>;
+  if (data.length === 0) return <h4>{props.messageWhenEmpty || 'No items'}</h4>;
   return (
     <div className={classes.root}>
       <GridList
@@ -86,6 +83,7 @@ SingleLineGridList.propTypes = {
   lg: PropTypes.number,
   md: PropTypes.number,
   sm: PropTypes.number,
+  messageWhenEmpty: PropTypes.string,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,

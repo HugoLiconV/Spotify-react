@@ -11,11 +11,15 @@ class BrowseService extends RequestService {
   getCategories = async () =>
     await this.makeRequest({ url: `browse/categories/` });
   // GET	/v1/browse/featured-playlists	Get a List of Featured Playlists	playlists
-  getFeaturedPlaylists = async () =>
-    await this.makeRequest({ url: `browse/featured-playlists` });
+  getFeaturedPlaylists = async (limit = 20, offset = 0) =>
+    await this.makeRequest({
+      url: `browse/featured-playlists?limit=${limit}&offset=${offset}`
+    });
   // GET	/v1/browse/new-releases	Get a List of New Releases	albums
-  getNewReleases = async () =>
-    await this.makeRequest({ url: `browse/new-releases` });
+  getNewReleases = async (limit = 20, offset = 0) =>
+    await this.makeRequest({
+      url: `browse/new-releases?limit=${limit}&offset=${offset}`
+    });
 }
 
 export default BrowseService;

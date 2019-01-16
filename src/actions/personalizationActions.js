@@ -5,19 +5,27 @@ import { errorHandler } from '../services/ErrorService';
 
 const personalizationService = new PersonalizationService();
 
-export const getUsersTopArtists = () => async dispatch => {
+export const getUsersTopArtists = (
+  timeRange = 'medium_term',
+  limit = 20,
+  offset = 0
+) => async dispatch => {
   const wrapper = errorHandler(
     personalizationService.getUsersTopArtists,
     dispatchError(dispatch)
   );
-  const artists = await wrapper();
+  const artists = await wrapper(timeRange, limit, offset);
   artists && dispatch({ type: GET_USERS_TOP_ARTISTS, payload: artists });
 };
-export const getUsersTopTracks = () => async dispatch => {
+export const getUsersTopTracks = (
+  timeRange = 'medium_term',
+  limit = 20,
+  offset = 0
+) => async dispatch => {
   const wrapper = errorHandler(
     personalizationService.getUsersTopTracks,
     dispatchError(dispatch)
   );
-  const tracks = await wrapper();
+  const tracks = await wrapper(timeRange, limit, offset);
   tracks && dispatch({ type: GET_USERS_TOP_TRACKS, payload: tracks });
 };

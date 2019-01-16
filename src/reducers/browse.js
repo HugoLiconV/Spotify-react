@@ -10,8 +10,8 @@ const initialState = {
   category: {},
   categorysPlaylists: [],
   categories: [],
-  featuredPlaylists: [],
-  newReleases: []
+  featuredPlaylists: {},
+  newReleases: {}
 };
 
 const browse = (state = initialState, action) => {
