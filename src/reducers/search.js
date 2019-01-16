@@ -1,7 +1,7 @@
 import { SEARCH } from '../actions/actionTypes';
 
 const initialState = {
-  searchResults: []
+  searchResults: {}
 };
 
 const search = (state = initialState, action) => {
