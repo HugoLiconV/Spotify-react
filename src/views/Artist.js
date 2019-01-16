@@ -42,7 +42,7 @@ const styles = {
   }
 };
 
-class Artist extends Component {
+export class Artist extends Component {
   constructor(props) {
     super(props);
     this.artistId = this.props.match.params.id;
@@ -69,7 +69,7 @@ class Artist extends Component {
   };
 
   getWiderImage(images) {
-    if (images.length === 0) return noImageFound;
+    if (!images || images.length === 0) return noImageFound;
     let widerImage = images[0];
     images.forEach(image => {
       image = Math.max(widerImage.width, image.width);
@@ -82,7 +82,7 @@ class Artist extends Component {
     const filteredImages = images.filter(
       ({ width }) => width > minSize && width < maxSize
     );
-    return filteredImages.length === 0 ? images[0].url : images[0].url;
+    return filteredImages.length === 0 ? images[0].url : filteredImages[0].url;
   };
 
   /**
@@ -128,7 +128,7 @@ class Artist extends Component {
             {artist.name || ''}
           </h1>
           <h4 className={classes.text + ' ' + classes.followers}>
-            followers: {numberWithCommas(followers)}
+            Followers: {numberWithCommas(followers)}
           </h4>
         </div>
         <GridContainer justify="flex-start" alignItems="center">
@@ -163,7 +163,11 @@ Artist.propTypes = {
   artist: PropTypes.object.isRequired,
   artistsAlbums: PropTypes.object.isRequired,
   artistsTopTracks: PropTypes.array.isRequired,
-  artistRelatedArtists: PropTypes.object.isRequired
+  artistRelatedArtists: PropTypes.object.isRequired,
+  getArtist: PropTypes.func.isRequired,
+  getArtistsAlbums: PropTypes.func.isRequired,
+  getArtistsTopTracks: PropTypes.func.isRequired,
+  getArtistsRelatedArtists: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
