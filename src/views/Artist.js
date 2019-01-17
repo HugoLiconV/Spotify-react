@@ -14,6 +14,7 @@ import {
 import SongTable from '../components/SongTable';
 import SingleLineGridList from '../components/Grid/GridList';
 import { withStyles } from '@material-ui/core/styles';
+import { play } from '../actions/playerActions';
 
 const styles = {
   coverImage: {
@@ -49,10 +50,7 @@ export class Artist extends Component {
   }
 
   componentDidMount() {
-    this.getArtist(this.artistId);
-    this.getArtistsAlbums(this.artistId);
-    this.getArtistsTopTracks(this.artistId);
-    this.getArtistsRelatedArtists(this.artistId);
+    this.fetchArtistData(this.artistId);
   }
 
   getArtist = id => {
@@ -92,14 +90,44 @@ export class Artist extends Component {
   filterDataToDisplay = (items, minSize = 250, maxSize = 400) => {
     if (!items || items.length === 0) return [];
     return items.map(item => {
-      const { name: title, images } = item;
+      const { name: title, images, uri, id } = item;
 
       const imgUrl = this.getItemImage(images, minSize, maxSize);
       return {
         title,
-        imgUrl
+        imgUrl,
+        uri,
+        id
       };
     });
+  };
+
+  play = config => {
+    this.props.play(config);
+  };
+
+  redirectToArtistInfo = id => {
+    this.props.history.push(`${id}`);
+  };
+
+  fetchArtistData = id => {
+    this.getArtist(id);
+    this.getArtistsAlbums(id);
+    this.getArtistsTopTracks(id);
+    this.getArtistsRelatedArtists(id);
+  };
+
+  onTileClick = ({ id, uri }) => {
+    if (uri.includes('album')) {
+      alert('Not implemented yet 😢');
+    } else if (uri.includes('artist')) {
+      this.redirectToArtistInfo(id);
+      this.fetchArtistData(id);
+    } else if (uri.includes('track')) {
+      this.play({ uris: [uri] });
+    } else if (uri.includes('playlist')) {
+      alert('Not implemented yet 😢');
+    }
   };
 
   render() {
@@ -141,6 +169,7 @@ export class Artist extends Component {
           <GridItem xs={12} sm={12} md={6}>
             <h3>Related Artists</h3>
             <SingleLineGridList
+              onTileClick={this.onTileClick}
               lg={3}
               data={this.filterDataToDisplay(relatedArtistsItems, 50, 200)}
             />
@@ -148,6 +177,7 @@ export class Artist extends Component {
           <GridItem xs={12} sm={12} md={12}>
             <h3>Albums</h3>
             <SingleLineGridList
+              onTileClick={this.onTileClick}
               grid
               lg={4}
               data={this.filterDataToDisplay(albumItems)}
@@ -189,7 +219,8 @@ const mapDispatchToProps = {
   getArtist,
   getArtistsAlbums,
   getArtistsTopTracks,
-  getArtistsRelatedArtists
+  getArtistsRelatedArtists,
+  play
 };
 
 export default connect(
