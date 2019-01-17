@@ -28,6 +28,15 @@ class App extends Component {
     };
   }
 
+  componentDidUpdate(e) {
+    if (e.history.location.pathname !== e.location.pathname) {
+      this.refs.mainPanel.scrollTop = 0;
+      if (this.state.mobileOpen) {
+        this.setState({ mobileOpen: false });
+      }
+    }
+  }
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
@@ -48,7 +57,7 @@ class App extends Component {
             open={this.state.mobileOpen}
             {...rest}
           />
-          <div className={classes.mainPanel}>
+          <div className={classes.mainPanel} ref="mainPanel">
             {this.noMargin() ? (
               <div>{switchRoutes}</div>
             ) : (
