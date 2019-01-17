@@ -134,8 +134,8 @@ export class PlayingNow extends Component {
     this.props.pause();
   };
 
-  resume = (contextUri, offset, position) => {
-    this.props.play(contextUri, offset, position);
+  play = config => {
+    this.props.play(config);
   };
 
   onRepeatClick = (states, currentState) => {
@@ -162,15 +162,12 @@ export class PlayingNow extends Component {
     const {
       is_playing: isPlaying,
       progress_ms: progress,
-      context,
       item
     } = this.props.currentlyPlaying;
     if (isPlaying) {
       this.pause();
     } else {
-      const contextUri = context ? context.uri : item.album.uri;
-      const offset = { uri: item.uri };
-      this.resume(contextUri, offset, progress);
+      this.play({ uris: [item.uri], position_ms: progress });
     }
   };
 
@@ -182,11 +179,17 @@ export class PlayingNow extends Component {
         return img.width === imagesSizes.medium;
       });
       const imgUrl = images.length === 0 ? noImageFound : images[0].url;
+      const uri = track.uri;
       return {
         title,
-        imgUrl
+        imgUrl,
+        uri
       };
     });
+  };
+
+  onTileClick = item => {
+    this.play({ uris: [item.uri] });
   };
 
   render() {
@@ -234,7 +237,10 @@ export class PlayingNow extends Component {
         </GridItem>
         <GridItem xs={12} sm={12} md={12} style={left}>
           <h2>Recently Played</h2>
-          <SingleLineGridList data={this.getAlbumImageAndTrackTitle(tracks)} />
+          <SingleLineGridList
+            data={this.getAlbumImageAndTrackTitle(tracks)}
+            onTileClick={this.onTileClick}
+          />
         </GridItem>
       </GridContainer>
     );

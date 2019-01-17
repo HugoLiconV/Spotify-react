@@ -80,9 +80,9 @@ export const pause = () => async dispatch => {
   setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
 
-export const play = (contextUri, offset, position) => async dispatch => {
+export const play = config => async dispatch => {
   const wrapper = errorHandler(playerService.play, dispatchError(dispatch));
-  const res = await wrapper(contextUri, offset, position);
+  const res = await wrapper(config);
   res && dispatch({ type: PLAY });
   setTimeout(() => dispatch(getCurrentlyPlaying()), 400);
 };
