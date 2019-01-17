@@ -31,16 +31,11 @@ class PlayerService extends RequestService {
   pause = async () =>
     await this.makeRequest({ url: '/me/player/pause', method: 'put' });
   // PUT	/v1/me/player/play	Start/Resume a User's Playback
-  play = async (contextUri, offset, position) => {
-    const data = {
-      context_uri: contextUri,
-      offset,
-      position_ms: position
-    };
+  play = async config => {
     return await this.makeRequest({
       url: '/me/player/play',
       method: 'put',
-      data
+      data: config
     });
   };
   // PUT	/v1/me/player/repeat	Set Repeat Mode On User's Playback

@@ -30,7 +30,7 @@ const styles = theme => ({
 });
 
 function SingleLineGridList(props) {
-  const { classes, data } = props;
+  const { classes, data, onTileClick } = props;
 
   const getGridListCols = () => {
     if (isWidthUp('xl', props.width)) {
@@ -45,7 +45,7 @@ function SingleLineGridList(props) {
       return 1;
     }
   };
-  
+
   const gridClasses = classNames({
     [classes.gridList]: !props.grid
   });
@@ -60,7 +60,13 @@ function SingleLineGridList(props) {
         cellHeight={300}
       >
         {data.map((item, i) => (
-          <GridListTile className={classes.tile} key={item.imgUrl + i}>
+          <GridListTile
+            className={classes.tile}
+            key={item.imgUrl + i}
+            onClick={() => {
+              onTileClick(item);
+            }}
+          >
             <img src={item.imgUrl} alt={item.title} />
             <GridListTileBar
               title={item.title}
@@ -84,10 +90,12 @@ SingleLineGridList.propTypes = {
   md: PropTypes.number,
   sm: PropTypes.number,
   messageWhenEmpty: PropTypes.string,
+  onTileClick: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
-      imgUrl: PropTypes.string
+      title: PropTypes.string.isRequired,
+      imgUrl: PropTypes.string.isRequired,
+      uri: PropTypes.string.isRequired
     })
   )
 };

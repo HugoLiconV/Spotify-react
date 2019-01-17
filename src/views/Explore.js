@@ -8,7 +8,7 @@ import {
   getUsersTopTracks,
   getUsersTopArtists
 } from '../actions/personalizationActions';
-
+import { play } from '../actions/playerActions';
 class Explore extends Component {
   componentDidMount() {
     this.getFeaturedPlaylists();
@@ -48,16 +48,38 @@ class Explore extends Component {
   filterDataToDisplay = items => {
     if (!items || items.length === 0) return [];
     return items.map(item => {
-      const { name: title, images, type, album } = item;
+      const { name: title, images, type, album, uri, id } = item;
       const imgUrl =
         type !== 'track'
           ? this.getItemImage(images, 250, 400)
           : this.getItemImage(album.images, 250, 400);
       return {
         title,
-        imgUrl
+        imgUrl,
+        uri,
+        id
       };
     });
+  };
+
+  play = config => {
+    this.props.play(config);
+  };
+
+  redirectToArtistInfo = id => {
+    this.props.history.push(`artist/${id}`);
+  };
+
+  onTileClick = ({ id, uri }) => {
+    if (uri.includes('album')) {
+      alert('Not implemented yet 😢');
+    } else if (uri.includes('artist')) {
+      this.redirectToArtistInfo(id);
+    } else if (uri.includes('track')) {
+      this.play({ uris: [uri] });
+    } else if (uri.includes('playlist')) {
+      alert('Not implemented yet 😢');
+    }
   };
 
   render() {
@@ -76,17 +98,27 @@ class Explore extends Component {
       <div>
         <h2>{featuredPlaylists.message || ''}</h2>
         <SingleLineGridList
+          onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(featuredPlaylistsItems)}
         />
 
         <h2>New Releases</h2>
-        <SingleLineGridList data={this.filterDataToDisplay(newReleasesItems)} />
+        <SingleLineGridList
+          onTileClick={this.onTileClick}
+          data={this.filterDataToDisplay(newReleasesItems)}
+        />
 
         <h2>Your top tracks</h2>
-        <SingleLineGridList data={this.filterDataToDisplay(topTracksItems)} />
+        <SingleLineGridList
+          onTileClick={this.onTileClick}
+          data={this.filterDataToDisplay(topTracksItems)}
+        />
 
         <h2>Your top artists:</h2>
-        <SingleLineGridList data={this.filterDataToDisplay(topArtistsItems)} />
+        <SingleLineGridList
+          onTileClick={this.onTileClick}
+          data={this.filterDataToDisplay(topArtistsItems)}
+        />
       </div>
     );
   }
@@ -112,7 +144,8 @@ const mapDispatchToProps = {
   getFeaturedPlaylists,
   getNewReleases,
   getUsersTopTracks,
-  getUsersTopArtists
+  getUsersTopArtists,
+  play
 };
 
 export default connect(
