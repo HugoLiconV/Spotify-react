@@ -45,9 +45,12 @@ exports[`<Artist /> component should match the snapshot 1`] = `
       <h3>
         Related Artists
       </h3>
-      <WithStyles(WithTheme(WithWidth(SingleLineGridList)))
+      <WithStyles(WithTheme(WithWidth(ImageGridList)))
         data={Array []}
         lg={3}
+        onTileClick={[Function]}
+        singleLine={true}
+        xs={2}
       />
     </WithStyles(GridItem)>
     <WithStyles(GridItem)
@@ -58,10 +61,11 @@ exports[`<Artist /> component should match the snapshot 1`] = `
       <h3>
         Albums
       </h3>
-      <WithStyles(WithTheme(WithWidth(SingleLineGridList)))
+      <WithStyles(WithTheme(WithWidth(ImageGridList)))
         data={Array []}
-        grid={true}
         lg={4}
+        onTileClick={[Function]}
+        xs={2}
       />
     </WithStyles(GridItem)>
   </GridContainer>
