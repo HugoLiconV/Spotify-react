@@ -12,7 +12,7 @@ import {
   getArtistsRelatedArtists
 } from '../actions/artistActions';
 import SongTable from '../components/SongTable';
-import SingleLineGridList from '../components/Grid/GridList';
+import ImageGridList from '../components/Grid/ImageGridList';
 import { withStyles } from '@material-ui/core/styles';
 import { play } from '../actions/playerActions';
 
@@ -85,7 +85,7 @@ export class Artist extends Component {
 
   /**
    * it returns the format required to display data on
-   * SingleLineGridList Component
+   * ImageGridList Component
    */
   filterDataToDisplay = (items, minSize = 250, maxSize = 400) => {
     if (!items || items.length === 0) return [];
@@ -168,7 +168,7 @@ export class Artist extends Component {
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
             <h3>Related Artists</h3>
-            <SingleLineGridList
+            <ImageGridList
               onTileClick={this.onTileClick}
               lg={3}
               data={this.filterDataToDisplay(relatedArtistsItems, 50, 200)}
@@ -176,7 +176,7 @@ export class Artist extends Component {
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
             <h3>Albums</h3>
-            <SingleLineGridList
+            <ImageGridList
               onTileClick={this.onTileClick}
               grid
               lg={4}

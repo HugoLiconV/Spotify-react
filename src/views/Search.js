@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '../components/Button/Button';
 import noImageFound from '../assets/img/no_image_found.png';
-import SingleLineGridList from '../components/Grid/GridList';
+import ImageGridList from '../components/Grid/ImageGridList';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { search } from '../actions/searchActions';
@@ -44,7 +44,7 @@ class Search extends Component {
 
   /**
    * it returns the format required to display data on
-   * SingleLineGridList Component
+   * ImageGridList Component
    */
   filterDataToDisplay = items => {
     if (!items || items.length === 0) return [];
@@ -127,19 +127,19 @@ class Search extends Component {
         ) : (
           <div>
             <h3>Arists:</h3>
-            <SingleLineGridList
+            <ImageGridList
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(artistItems)}
             />
             <h3>Tracks:</h3>
-            <SingleLineGridList
+            <ImageGridList
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(trackItems)}
             />
             <h3>Albums:</h3>
-            <SingleLineGridList
+            <ImageGridList
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(albumItems)}

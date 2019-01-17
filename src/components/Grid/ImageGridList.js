@@ -29,7 +29,7 @@ const styles = theme => ({
   }
 });
 
-function SingleLineGridList(props) {
+function ImageGridList(props) {
   const { classes, data, onTileClick } = props;
 
   const getGridListCols = () => {
@@ -82,7 +82,7 @@ function SingleLineGridList(props) {
   );
 }
 
-SingleLineGridList.propTypes = {
+ImageGridList.propTypes = {
   classes: PropTypes.object.isRequired,
   grid: PropTypes.bool,
   xl: PropTypes.number,
@@ -100,4 +100,4 @@ SingleLineGridList.propTypes = {
   )
 };
 
-export default withStyles(styles)(withWidth()(SingleLineGridList));
+export default withStyles(styles)(withWidth()(ImageGridList));

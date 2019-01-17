@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SingleLineGridList from '../components/Grid/GridList';
+import ImageGridList from '../components/Grid/ImageGridList';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getFeaturedPlaylists, getNewReleases } from '../actions/browseActions';
@@ -43,7 +43,7 @@ class Explore extends Component {
 
   /**
    * it returns the format required to display data on
-   * SingleLineGridList Component
+   * ImageGridList Component
    */
   filterDataToDisplay = items => {
     if (!items || items.length === 0) return [];
@@ -97,25 +97,25 @@ class Explore extends Component {
     return (
       <div>
         <h2>{featuredPlaylists.message || ''}</h2>
-        <SingleLineGridList
+        <ImageGridList
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(featuredPlaylistsItems)}
         />
 
         <h2>New Releases</h2>
-        <SingleLineGridList
+        <ImageGridList
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(newReleasesItems)}
         />
 
         <h2>Your top tracks</h2>
-        <SingleLineGridList
+        <ImageGridList
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(topTracksItems)}
         />
 
         <h2>Your top artists:</h2>
-        <SingleLineGridList
+        <ImageGridList
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(topArtistsItems)}
         />

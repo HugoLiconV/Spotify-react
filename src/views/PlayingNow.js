@@ -18,7 +18,7 @@ import {
   toggleShuffle,
   transferPlayback
 } from '../actions/playerActions';
-import SingleLineGridList from '../components/Grid/GridList';
+import ImageGridList from '../components/Grid/ImageGridList';
 import { imagesSizes, repeatStates } from '../constants';
 import noImageFound from '../assets/img/no_image_found.png';
 
@@ -237,7 +237,7 @@ export class PlayingNow extends Component {
         </GridItem>
         <GridItem xs={12} sm={12} md={12} style={left}>
           <h2>Recently Played</h2>
-          <SingleLineGridList
+          <ImageGridList
             data={this.getAlbumImageAndTrackTitle(tracks)}
             onTileClick={this.onTileClick}
           />
