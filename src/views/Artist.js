@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GridContainer from '../components/Grid/GridContainer';
 import GridItem from '../components/Grid/GridItem';
-import noImageFound from '../assets/img/no_image_found.png';
 import { numberWithCommas } from '../services/utils';
 import {
   getArtist,
@@ -15,6 +14,7 @@ import SongTable from '../components/SongTable';
 import ImageGridList from '../components/Grid/ImageGridList';
 import { withStyles } from '@material-ui/core/styles';
 import { play } from '../actions/playerActions';
+import { filterDataToDisplay, getWiderImage } from '../services/utils';
 
 const styles = {
   coverImage: {
@@ -26,7 +26,8 @@ const styles = {
     height: '300px',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    flexWrap: 'wrap'
   },
   text: {
     background: 'linear-gradient(60deg, #26c6da, #00acc1)',
@@ -64,42 +65,6 @@ export class Artist extends Component {
   };
   getArtistsRelatedArtists = id => {
     this.props.getArtistsRelatedArtists(id);
-  };
-
-  getWiderImage(images) {
-    if (!images || images.length === 0) return noImageFound;
-    let widerImage = images[0];
-    images.forEach(image => {
-      image = Math.max(widerImage.width, image.width);
-    });
-    return widerImage.url;
-  }
-
-  getItemImage = (images, minSize, maxSize) => {
-    if (!images || images.length === 0) return noImageFound;
-    const filteredImages = images.filter(
-      ({ width }) => width > minSize && width < maxSize
-    );
-    return filteredImages.length === 0 ? images[0].url : filteredImages[0].url;
-  };
-
-  /**
-   * it returns the format required to display data on
-   * ImageGridList Component
-   */
-  filterDataToDisplay = (items, minSize = 250, maxSize = 400) => {
-    if (!items || items.length === 0) return [];
-    return items.map(item => {
-      const { name: title, images, uri, id } = item;
-
-      const imgUrl = this.getItemImage(images, minSize, maxSize);
-      return {
-        title,
-        imgUrl,
-        uri,
-        id
-      };
-    });
   };
 
   play = config => {
@@ -147,7 +112,7 @@ export class Artist extends Component {
       <div>
         <div
           style={{
-            background: `url('${this.getWiderImage(artistImages)}')`
+            background: `url('${getWiderImage(artistImages)}')`
           }}
           className={classes.coverImage}
           alt={artist.name || ''}
@@ -172,7 +137,8 @@ export class Artist extends Component {
               singleLine
               onTileClick={this.onTileClick}
               lg={3}
-              data={this.filterDataToDisplay(relatedArtistsItems, 50, 200)}
+              xs={2}
+              data={filterDataToDisplay(relatedArtistsItems, 300, 500)}
             />
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
@@ -180,7 +146,8 @@ export class Artist extends Component {
             <ImageGridList
               onTileClick={this.onTileClick}
               lg={4}
-              data={this.filterDataToDisplay(albumItems)}
+              xs={2}
+              data={filterDataToDisplay(albumItems)}
             />
           </GridItem>
         </GridContainer>

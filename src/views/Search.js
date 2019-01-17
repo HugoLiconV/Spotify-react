@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '../components/Button/Button';
-import noImageFound from '../assets/img/no_image_found.png';
 import ImageGridList from '../components/Grid/ImageGridList';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
@@ -10,6 +9,7 @@ import { search } from '../actions/searchActions';
 import { withStyles } from '@material-ui/core/styles';
 import { areArraysEmpty } from '../services/utils';
 import { play } from '../actions/playerActions';
+import { filterDataToDisplay } from '../services/utils';
 
 const styles = theme => ({
   container: {
@@ -29,38 +29,6 @@ class Search extends Component {
 
   search = (query, type, limit, offset) => {
     this.props.search(query, type, limit, offset);
-  };
-
-  /**
-   * size: small, medium, large
-   */
-  getItemImage = (images, minSize, maxSize) => {
-    if (!images || images.length === 0) return noImageFound;
-    const filteredImages = images.filter(
-      ({ width }) => width > minSize && width < maxSize
-    );
-    return filteredImages.length === 0 ? images[0].url : filteredImages[0].url;
-  };
-
-  /**
-   * it returns the format required to display data on
-   * ImageGridList Component
-   */
-  filterDataToDisplay = items => {
-    if (!items || items.length === 0) return [];
-    return items.map(item => {
-      const { name: title, images, type, album, uri, id } = item;
-      const imgUrl =
-        type !== 'track'
-          ? this.getItemImage(images, 250, 400)
-          : this.getItemImage(album.images, 250, 400);
-      return {
-        title,
-        imgUrl,
-        uri,
-        id
-      };
-    });
   };
 
   handleChange = event => {
@@ -131,21 +99,21 @@ class Search extends Component {
               singleLine
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
-              data={this.filterDataToDisplay(artistItems)}
+              data={filterDataToDisplay(artistItems)}
             />
             <h3>Tracks:</h3>
             <ImageGridList
               singleLine
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
-              data={this.filterDataToDisplay(trackItems)}
+              data={filterDataToDisplay(trackItems)}
             />
             <h3>Albums:</h3>
             <ImageGridList
               singleLine
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
-              data={this.filterDataToDisplay(albumItems)}
+              data={filterDataToDisplay(albumItems)}
             />
           </div>
         )}

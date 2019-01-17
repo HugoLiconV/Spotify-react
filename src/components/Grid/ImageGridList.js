@@ -33,16 +33,17 @@ function ImageGridList(props) {
   const { classes, data, onTileClick } = props;
 
   const getGridListCols = () => {
-    if (isWidthUp('xl', props.width)) {
-      return props.xl || 4;
-    } else if (isWidthUp('lg', props.width)) {
-      return props.lg || 3;
-    } else if (isWidthUp('md', props.width)) {
-      return props.md || 2;
-    } else if (isWidthUp('sm', props.width)) {
-      return props.sm || 2;
-    } else {
-      return 1;
+    const { width, xl, lg, md, sm, xs } = props;
+    if (isWidthUp('xl', width)) {
+      return xl || 4;
+    } else if (isWidthUp('lg', width)) {
+      return lg || 3;
+    } else if (isWidthUp('md', width)) {
+      return md || 2;
+    } else if (isWidthUp('sm', width)) {
+      return sm || 2;
+    } else if (isWidthUp('xs', width)) {
+      return xs || 1;
     }
   };
 
@@ -89,6 +90,7 @@ ImageGridList.propTypes = {
   lg: PropTypes.number,
   md: PropTypes.number,
   sm: PropTypes.number,
+  xs: PropTypes.number,
   messageWhenEmpty: PropTypes.string,
   onTileClick: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(
