@@ -169,6 +169,7 @@ export class Artist extends Component {
           <GridItem xs={12} sm={12} md={6}>
             <h3>Related Artists</h3>
             <ImageGridList
+              singleLine
               onTileClick={this.onTileClick}
               lg={3}
               data={this.filterDataToDisplay(relatedArtistsItems, 50, 200)}
@@ -178,7 +179,6 @@ export class Artist extends Component {
             <h3>Albums</h3>
             <ImageGridList
               onTileClick={this.onTileClick}
-              grid
               lg={4}
               data={this.filterDataToDisplay(albumItems)}
             />

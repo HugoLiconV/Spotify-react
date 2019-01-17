@@ -238,6 +238,7 @@ export class PlayingNow extends Component {
         <GridItem xs={12} sm={12} md={12} style={left}>
           <h2>Recently Played</h2>
           <ImageGridList
+            singleLine
             data={this.getAlbumImageAndTrackTitle(tracks)}
             onTileClick={this.onTileClick}
           />

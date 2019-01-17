@@ -98,24 +98,28 @@ class Explore extends Component {
       <div>
         <h2>{featuredPlaylists.message || ''}</h2>
         <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(featuredPlaylistsItems)}
         />
 
         <h2>New Releases</h2>
         <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(newReleasesItems)}
         />
 
         <h2>Your top tracks</h2>
         <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(topTracksItems)}
         />
 
         <h2>Your top artists:</h2>
         <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
           data={this.filterDataToDisplay(topArtistsItems)}
         />

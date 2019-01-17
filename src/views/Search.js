@@ -128,18 +128,21 @@ class Search extends Component {
           <div>
             <h3>Arists:</h3>
             <ImageGridList
+              singleLine
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(artistItems)}
             />
             <h3>Tracks:</h3>
             <ImageGridList
+              singleLine
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(trackItems)}
             />
             <h3>Albums:</h3>
             <ImageGridList
+              singleLine
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(albumItems)}

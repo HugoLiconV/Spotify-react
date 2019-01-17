@@ -47,7 +47,7 @@ function ImageGridList(props) {
   };
 
   const gridClasses = classNames({
-    [classes.gridList]: !props.grid
+    [classes.gridList]: props.singleLine
   });
 
   if (data.length === 0) return <h4>{props.messageWhenEmpty || 'No items'}</h4>;
@@ -84,7 +84,7 @@ function ImageGridList(props) {
 
 ImageGridList.propTypes = {
   classes: PropTypes.object.isRequired,
-  grid: PropTypes.bool,
+  singleLine: PropTypes.bool,
   xl: PropTypes.number,
   lg: PropTypes.number,
   md: PropTypes.number,
