@@ -9,12 +9,12 @@ import PropTypes from 'prop-types';
 import { search } from '../actions/searchActions';
 import { withStyles } from '@material-ui/core/styles';
 import { areArraysEmpty } from '../services/utils';
+import { play } from '../actions/playerActions';
 
 const styles = theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-end'
+    flexWrap: 'wrap'
   },
   textField: {
     margin: 0,
@@ -49,14 +49,16 @@ class Search extends Component {
   filterDataToDisplay = items => {
     if (!items || items.length === 0) return [];
     return items.map(item => {
-      const { name: title, images, type, album } = item;
+      const { name: title, images, type, album, uri, id } = item;
       const imgUrl =
         type !== 'track'
           ? this.getItemImage(images, 250, 400)
           : this.getItemImage(album.images, 250, 400);
       return {
         title,
-        imgUrl
+        imgUrl,
+        uri,
+        id
       };
     });
   };
@@ -72,6 +74,26 @@ class Search extends Component {
     const { searchQuery } = this.state;
     if (!searchQuery) return;
     this.search(searchQuery, ['album', 'track', 'artist']);
+  };
+
+  play = config => {
+    this.props.play(config);
+  };
+
+  redirectToArtistInfo = id => {
+    this.props.history.push(`artist/${id}`);
+  };
+
+  onTileClick = ({ id, uri }) => {
+    if (uri.includes('album')) {
+      alert('Not implemented yet 😢');
+    } else if (uri.includes('artist')) {
+      this.redirectToArtistInfo(id);
+    } else if (uri.includes('track')) {
+      this.play({ uris: [uri] });
+    } else if (uri.includes('playlist')) {
+      alert('Not implemented yet 😢');
+    }
   };
 
   render() {
@@ -106,16 +128,19 @@ class Search extends Component {
           <div>
             <h3>Arists:</h3>
             <SingleLineGridList
+              onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(artistItems)}
             />
             <h3>Tracks:</h3>
             <SingleLineGridList
+              onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(trackItems)}
             />
             <h3>Albums:</h3>
             <SingleLineGridList
+              onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={this.filterDataToDisplay(albumItems)}
             />
@@ -133,7 +158,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  search
+  search,
+  play
 };
 
 Search.propTypes = {
