@@ -93,8 +93,9 @@ SingleLineGridList.propTypes = {
   onTileClick: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
-      imgUrl: PropTypes.string
+      title: PropTypes.string.isRequired,
+      imgUrl: PropTypes.string.isRequired,
+      uri: PropTypes.string.isRequired
     })
   )
 };
