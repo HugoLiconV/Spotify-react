@@ -9,6 +9,7 @@ describe('<PlayingNow/> component', () => {
   let player;
   let props;
   let devices;
+  let recentlyPlayed;
 
   beforeEach(() => {
     player = {
@@ -170,6 +171,95 @@ describe('<PlayingNow/> component', () => {
         name: 'You Wish You Were Red'
       }
     };
+
+    recentlyPlayed = {
+      items: [
+        {
+          track: {
+            album: {
+              album_type: 'compilation',
+              artists: [
+                {
+                  external_urls: {
+                    spotify:
+                      'https://open.spotify.com/artist/0C0XlULifJtAgn6ZNCW2eu'
+                  },
+                  href:
+                    'https://api.spotify.com/v1/artists/0C0XlULifJtAgn6ZNCW2eu',
+                  id: '0C0XlULifJtAgn6ZNCW2eu',
+                  name: 'The Killers',
+                  type: 'artist',
+                  uri: 'spotify:artist:0C0XlULifJtAgn6ZNCW2eu'
+                }
+              ],
+              external_urls: {
+                spotify: 'https://open.spotify.com/album/3T5bbO2BOnnjun6jKhJdjV'
+              },
+              href: 'https://api.spotify.com/v1/albums/3T5bbO2BOnnjun6jKhJdjV',
+              id: '3T5bbO2BOnnjun6jKhJdjV',
+              images: [
+                {
+                  height: 640,
+                  url:
+                    'https://i.scdn.co/image/d2a5e38b8d4d7907e0efe5a62592f6fb49c019a1',
+                  width: 640
+                },
+                {
+                  height: 300,
+                  url:
+                    'https://i.scdn.co/image/51828e2c16fc7bc48671c9d3c92f63d81745ec01',
+                  width: 300
+                },
+                {
+                  height: 64,
+                  url:
+                    'https://i.scdn.co/image/ba09f750f9d9ebe5d56444f20606b901ed4d6f0f',
+                  width: 64
+                }
+              ],
+              name: 'Direct Hits',
+              type: 'album',
+              uri: 'spotify:album:3T5bbO2BOnnjun6jKhJdjV'
+            },
+            artists: [
+              {
+                external_urls: {
+                  spotify:
+                    'https://open.spotify.com/artist/0C0XlULifJtAgn6ZNCW2eu'
+                },
+                href:
+                  'https://api.spotify.com/v1/artists/0C0XlULifJtAgn6ZNCW2eu',
+                id: '0C0XlULifJtAgn6ZNCW2eu',
+                name: 'The Killers',
+                type: 'artist',
+                uri: 'spotify:artist:0C0XlULifJtAgn6ZNCW2eu'
+              }
+            ],
+            disc_number: 1,
+            duration_ms: 245160,
+            explicit: false,
+            external_ids: {
+              isrc: 'USUM71206893'
+            },
+            external_urls: {
+              spotify: 'https://open.spotify.com/track/1E3pFst1X74fCxE0K9pqhy'
+            },
+            href: 'https://api.spotify.com/v1/tracks/1E3pFst1X74fCxE0K9pqhy',
+            id: '1E3pFst1X74fCxE0K9pqhy',
+            name: 'Runaways',
+            popularity: 41,
+            preview_url:
+              'https://p.scdn.co/mp3-preview/af85ca52bfd8392c172b070328fc447693de33d3?cid=774b29d4f13844c495f206cafdad9c86',
+            track_number: 11,
+            type: 'track',
+            uri: 'spotify:track:1E3pFst1X74fCxE0K9pqhy'
+          },
+          played_at: '2019-01-17T21:54:50.464Z',
+          context: null
+        }
+      ]
+    };
+
     devices = [
       {
         id: 'c3dbf2b97ebfc7207341caddeba8e1c46804661f',
@@ -185,6 +275,8 @@ describe('<PlayingNow/> component', () => {
       currentlyPlaying,
       player,
       devices,
+      recentlyPlayed,
+      pollingPlayerState: jest.fn(),
       getCurrentlyPlaying: jest.fn(),
       nextSong: jest.fn(),
       getPlayer: jest.fn(),
@@ -221,6 +313,6 @@ describe('<PlayingNow/> component', () => {
   });
 
   it("should show recently played album's covers", () => {
-    expect(wrapper.find('AlbumsList')).toExist();
+    expect(wrapper.find('#recently-played')).toExist();
   });
 });

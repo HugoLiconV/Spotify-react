@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SingleLineGridList from '../components/Grid/GridList';
+import ImageGridList from '../components/Grid/ImageGridList';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getFeaturedPlaylists, getNewReleases } from '../actions/browseActions';
@@ -9,6 +9,7 @@ import {
   getUsersTopArtists
 } from '../actions/personalizationActions';
 import { play } from '../actions/playerActions';
+import { filterDataToDisplay } from '../services/utils';
 class Explore extends Component {
   componentDidMount() {
     this.getFeaturedPlaylists();
@@ -31,35 +32,6 @@ class Explore extends Component {
 
   getNewReleases = (limit = 20, offset = 0) => {
     this.props.getNewReleases(limit, offset);
-  };
-
-  getItemImage = (images, minSize, maxSize) => {
-    if (!images || images.length === 0) return noImageFound;
-    const filteredImages = images.filter(
-      ({ width }) => width > minSize && width < maxSize
-    );
-    return filteredImages.length === 0 ? images[0].url : images[0].url;
-  };
-
-  /**
-   * it returns the format required to display data on
-   * SingleLineGridList Component
-   */
-  filterDataToDisplay = items => {
-    if (!items || items.length === 0) return [];
-    return items.map(item => {
-      const { name: title, images, type, album, uri, id } = item;
-      const imgUrl =
-        type !== 'track'
-          ? this.getItemImage(images, 250, 400)
-          : this.getItemImage(album.images, 250, 400);
-      return {
-        title,
-        imgUrl,
-        uri,
-        id
-      };
-    });
   };
 
   play = config => {
@@ -97,27 +69,31 @@ class Explore extends Component {
     return (
       <div>
         <h2>{featuredPlaylists.message || ''}</h2>
-        <SingleLineGridList
+        <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
-          data={this.filterDataToDisplay(featuredPlaylistsItems)}
+          data={filterDataToDisplay(featuredPlaylistsItems)}
         />
 
         <h2>New Releases</h2>
-        <SingleLineGridList
+        <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
-          data={this.filterDataToDisplay(newReleasesItems)}
+          data={filterDataToDisplay(newReleasesItems)}
         />
 
         <h2>Your top tracks</h2>
-        <SingleLineGridList
+        <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
-          data={this.filterDataToDisplay(topTracksItems)}
+          data={filterDataToDisplay(topTracksItems)}
         />
 
         <h2>Your top artists:</h2>
-        <SingleLineGridList
+        <ImageGridList
+          singleLine
           onTileClick={this.onTileClick}
-          data={this.filterDataToDisplay(topArtistsItems)}
+          data={filterDataToDisplay(topArtistsItems)}
         />
       </div>
     );

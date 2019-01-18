@@ -18,9 +18,9 @@ import {
   toggleShuffle,
   transferPlayback
 } from '../actions/playerActions';
-import SingleLineGridList from '../components/Grid/GridList';
-import { imagesSizes, repeatStates } from '../constants';
-import noImageFound from '../assets/img/no_image_found.png';
+import ImageGridList from '../components/Grid/ImageGridList';
+import { repeatStates } from '../constants';
+import { filterDataToDisplay, isObjectEmpty } from '../services/utils';
 
 const currentPlayback = {
   item: {
@@ -154,10 +154,6 @@ export class PlayingNow extends Component {
     );
   };
 
-  isObjectEmpty = obj => {
-    return obj && Object.keys(obj).length === 0;
-  };
-
   onPauseClick = () => {
     const {
       is_playing: isPlaying,
@@ -171,23 +167,6 @@ export class PlayingNow extends Component {
     }
   };
 
-  getAlbumImageAndTrackTitle = tracks => {
-    if (!tracks || tracks.length === 0) return [];
-    return tracks.map(track => {
-      const { name: title, album } = track;
-      const images = album.images.filter(img => {
-        return img.width === imagesSizes.medium;
-      });
-      const imgUrl = images.length === 0 ? noImageFound : images[0].url;
-      const uri = track.uri;
-      return {
-        title,
-        imgUrl,
-        uri
-      };
-    });
-  };
-
   onTileClick = item => {
     this.play({ uris: [item.uri] });
   };
@@ -199,7 +178,7 @@ export class PlayingNow extends Component {
     const { items } = this.props.recentlyPlayed;
     const tracks = items && items.map(item => item.track);
 
-    if (this.isObjectEmpty(currentlyPlaying) || this.isObjectEmpty(player))
+    if (isObjectEmpty(currentlyPlaying) || isObjectEmpty(player))
       return 'Nothing is playing';
     const { device } = player;
     const { artists, album, name } = currentlyPlaying.item;
@@ -237,8 +216,10 @@ export class PlayingNow extends Component {
         </GridItem>
         <GridItem xs={12} sm={12} md={12} style={left}>
           <h2>Recently Played</h2>
-          <SingleLineGridList
-            data={this.getAlbumImageAndTrackTitle(tracks)}
+          <ImageGridList
+            id="recently-played"
+            singleLine
+            data={filterDataToDisplay(tracks)}
             onTileClick={this.onTileClick}
           />
         </GridItem>
