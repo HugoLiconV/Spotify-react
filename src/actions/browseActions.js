@@ -1,5 +1,5 @@
 import BrowseService from '../services/http/browse';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 import { errorHandler } from '../services/ErrorService';
 import {
   GET_CATEGORY,

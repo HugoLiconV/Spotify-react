@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
-import { hideNotification } from './actions/errorActions';
+import { hideNotification } from './actions/notificationActions';
 import SnackbarContentWrapper from './components/SnackbarContentWrapper';
 import { INFO_NOTIFICATION } from './constants';
-class ErrorMessages extends Component {
+class Notifications extends Component {
   state = {
     open: false
   };
@@ -39,18 +39,18 @@ class ErrorMessages extends Component {
   }
 }
 
-ErrorMessages.propTypes = {
+Notifications.propTypes = {
   message: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  message: state.error.message,
-  show: state.error.show,
-  type: state.error.type
+  message: state.notification.message,
+  show: state.notification.show,
+  type: state.notification.type
 });
 
 export default connect(
   mapStateToProps,
   { hideNotification }
-)(ErrorMessages);
+)(Notifications);

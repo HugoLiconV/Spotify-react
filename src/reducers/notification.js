@@ -7,7 +7,7 @@ const initialState = {
   type: ''
 };
 
-const error = (state = initialState, action) => {
+const notification = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       const { message, status, type } = action.payload;
@@ -30,4 +30,4 @@ const error = (state = initialState, action) => {
       return state;
   }
 };
-export default error;
+export default notification;

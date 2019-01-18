@@ -1,6 +1,6 @@
 import SearchService from '../services/http/search';
 import { SEARCH } from './actionTypes';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 import { errorHandler } from '../services/ErrorService';
 
 const searchSercice = new SearchService();

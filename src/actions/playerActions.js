@@ -15,7 +15,7 @@ import {
   SET_VOLUME
 } from './actionTypes';
 import { errorHandler } from '../services/ErrorService';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 
 const playerService = new PlayerService();
 
