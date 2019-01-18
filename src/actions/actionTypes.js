@@ -1,6 +1,6 @@
-/*  Error actions  */
-export const SHOW_ERROR = 'SHOW_ERROR';
-export const HIDE_ERROR = 'HIDE_ERROR';
+/*  Notifications actions  */
+export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
+export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION';
 
 /*  User actions  */
 export const SAVE_TOKEN = 'SAVE_TOKEN';

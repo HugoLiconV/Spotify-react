@@ -1,28 +1,31 @@
-import { SHOW_ERROR, HIDE_ERROR } from './actionTypes';
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from './actionTypes';
 import { deleteToken } from './tokenActions';
-export const showError = (status, message) => {
+import { ERROR_NOTIFICATION } from '../constants';
+
+export const showNotification = (status, message, type) => {
   return {
-    type: SHOW_ERROR,
+    type: SHOW_NOTIFICATION,
     payload: {
       status,
-      message
+      message,
+      type
     }
   };
 };
 
-export const hideError = () => {
+export const hideNotification = () => {
   return {
-    type: HIDE_ERROR,
+    type: HIDE_NOTIFICATION,
     payload: { show: false }
   };
 };
 
 export function dispatchError(dispatch) {
-  return ({ status, message }) => {
-    if (status === 401) {
+  return ({ status, message, type }) => {
+    if (type === ERROR_NOTIFICATION && status === 401) {
       dispatch(deleteToken());
       window.location.reload(true);
     }
-    dispatch(showError(status, message));
+    dispatch(showNotification(status, message, type));
   };
 }
