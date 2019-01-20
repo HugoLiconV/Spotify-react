@@ -55,6 +55,13 @@ export class Artist extends Component {
     this.fetchArtistData(this.artistId);
   }
 
+  componentDidUpdate(e) {
+    if (e.history.location.pathname !== e.location.pathname) {
+      const id = this.props.match.params.id;
+      this.fetchArtistData(id);
+    }
+  }
+
   getArtist = id => {
     this.props.getArtist(id);
   };
@@ -88,7 +95,6 @@ export class Artist extends Component {
       alert('Not implemented yet 😢');
     } else if (uri.includes('artist')) {
       this.redirectToArtistInfo(id);
-      this.fetchArtistData(id);
     } else if (uri.includes('track')) {
       this.play({ uris: [uri] });
     } else if (uri.includes('playlist')) {
