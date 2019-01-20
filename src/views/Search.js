@@ -47,7 +47,7 @@ class Search extends Component {
     event.preventDefault();
     const { searchQuery } = this.state;
     if (!searchQuery) return;
-    this.search(searchQuery, ['album', 'track', 'artist']);
+    this.search(searchQuery, ['album', 'track', 'artist', 'playlist']);
   };
 
   play = config => {
@@ -85,10 +85,11 @@ class Search extends Component {
 
   render() {
     const { classes } = this.props;
-    const { albums, artists, tracks } = this.props.results;
+    const { albums, artists, tracks, playlists } = this.props.results;
     const albumItems = albums && albums.items;
     const artistItems = artists && artists.items;
     const trackItems = tracks && tracks.items;
+    const playlistItems = playlists && playlists.items;
     return (
       <div>
         <form
@@ -133,6 +134,13 @@ class Search extends Component {
               onTileClick={this.onTileClick}
               messageWhenEmpty="No search Results"
               data={filterDataToDisplay(albumItems)}
+            />
+            <h3>Playlists:</h3>
+            <ImageGridList
+              singleLine
+              onTileClick={this.onTileClick}
+              messageWhenEmpty="No search Results"
+              data={filterDataToDisplay(playlistItems)}
             />
           </div>
         )}
