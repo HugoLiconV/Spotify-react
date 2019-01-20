@@ -6,6 +6,8 @@ import CardBody from './Card/CardBody';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { millisToMinutesAndSeconds } from '../services/utils';
+import TrackLink from './TrackLink';
+import AlbumLink from './AlbumLink';
 
 const styles = {
   cardCategoryWhite: {
@@ -54,11 +56,14 @@ function createData(songs, { cover, album, duration }) {
     row.push(num);
 
     const songName = song.name;
-    row.push(songName);
+    const uri = song.uri;
+
+    row.push(<TrackLink uri={uri} title={songName} />);
 
     if (album && song.album) {
       const albumName = song.album.name;
-      row.push(albumName);
+      const albumId = song.album.id;
+      row.push(<AlbumLink title={albumName} albumId={albumId} />);
     }
     duration && row.push(millisToMinutesAndSeconds(song.duration_ms));
     return row;
