@@ -5,8 +5,6 @@ import CardHeader from './Card/CardHeader';
 import CardBody from './Card/CardBody';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import noImageFound from '../assets/img/no_image_found.png';
-import AlbumCover from './AlbumCover';
 import { millisToMinutesAndSeconds } from '../services/utils';
 
 const styles = {
@@ -39,19 +37,10 @@ const styles = {
   }
 };
 
-function getSmallerImage(images) {
-  if (images.length === 0) return noImageFound;
-  let widerImage = images[0];
-  images.forEach(image => {
-    image = Math.min(widerImage.width, image.width);
-  });
-  return widerImage.url;
-}
-
 function getHeaders({ cover, album, duration }) {
   // These are default values, they are always shown
   const headers = ['#', 'Title'];
-  cover && headers.push('');
+
   album && headers.push('Album');
   duration && headers.push('Duration');
   return headers;
@@ -63,18 +52,13 @@ function createData(songs, { cover, album, duration }) {
     const row = [];
     const num = (i + 1).toString();
     row.push(num);
+
     const songName = song.name;
     row.push(songName);
-    if (song.album) {
-      if (cover) {
-        const albumImage = getSmallerImage(song.album.images);
-        const cover = <AlbumCover src={albumImage} width="32px" />;
-        row.push(cover);
-      }
-      if (album) {
-        const albumName = song.album && song.album.name;
-        row.push(albumName);
-      }
+
+    if (album && song.album) {
+      const albumName = song.album.name;
+      row.push(albumName);
     }
     duration && row.push(millisToMinutesAndSeconds(song.duration_ms));
     return row;
@@ -105,7 +89,7 @@ const SongTable = props => {
 SongTable.propTypes = {
   songs: PropTypes.array.isRequired,
   tableTitle: PropTypes.string.isRequired,
-  cover: PropTypes.bool,
+  tableSubtitle: PropTypes.string,
   album: PropTypes.bool,
   duration: PropTypes.bool
 };

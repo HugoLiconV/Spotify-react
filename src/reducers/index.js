@@ -5,6 +5,7 @@ import browse from './browse';
 import notification from './notification';
 import personalization from './personalization';
 import player from './player';
+import playlist from './playlist';
 import search from './search';
 import token from './token';
 import track from './track';
@@ -17,6 +18,7 @@ export default combineReducers({
   notification,
   personalization,
   player,
+  playlist,
   search,
   token,
   track,

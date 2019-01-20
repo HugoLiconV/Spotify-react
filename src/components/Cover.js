@@ -12,7 +12,7 @@ const Cover = props => {
         xs={12}
         sm={6}
         md={3}
-        style={{ padding: '0', 'text-align': 'center' }}
+        style={{ padding: '0', textAlign: 'center' }}
       >
         <AlbumCover src={coverImage} title={title} width="300px" />
       </GridItem>

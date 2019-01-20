@@ -11,6 +11,7 @@ import SearchComp from '../views/Search';
 import Profile from '../views/Profile';
 import Artist from '../views/Artist';
 import Album from '../views/Album';
+import Playlist from '../views/Playlist';
 
 const appRoutes = [
   {
@@ -58,6 +59,13 @@ const appRoutes = [
     sidebarName: 'Album',
     navbarName: 'Album',
     component: Album
+  },
+  {
+    path: '/playlist/:id',
+    showInSidebar: false,
+    sidebarName: 'Playlist',
+    navbarName: 'Playlist',
+    component: Playlist
   },
   {
     redirect: true,
