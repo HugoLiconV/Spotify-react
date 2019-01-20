@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Cover from '../components/Cover';
 import { getItemImage } from '../services/utils';
 import SongTable from '../components/SongTable';
+import ArtistLink from '../components/ArtistLink';
 
 export class Album extends Component {
   componentDidMount() {
@@ -35,7 +36,7 @@ export class Album extends Component {
   getArtistsNames(artist, key, arr) {
     return (
       <span key={key}>
-        {artist.name}
+        <ArtistLink title={artist.name} artistId={artist.id} />
         {key < arr.length - 1 ? ', ' : ''}
       </span>
     );

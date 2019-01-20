@@ -21,6 +21,7 @@ import {
 import ImageGridList from '../components/Grid/ImageGridList';
 import { repeatStates } from '../constants';
 import { filterDataToDisplay, isObjectEmpty } from '../services/utils';
+import ArtistLink from '../components/ArtistLink';
 
 const currentPlayback = {
   item: {
@@ -145,10 +146,10 @@ export class PlayingNow extends Component {
     this.setRepeat(newState);
   };
 
-  renderNames = (artist, key, arr) => {
+  renderArtistsNames = (artist, key, arr) => {
     return (
       <span key={key}>
-        {artist.name}
+        <ArtistLink title={artist.name} artistId={artist.id} />
         {key < arr.length - 1 ? ', ' : ''}
       </span>
     );
@@ -203,7 +204,9 @@ export class PlayingNow extends Component {
         <GridItem xs={12} sm={6} md={6}>
           <div className="song-info">
             <h3 className="song-title">{name}</h3>
-            <h4 className="song-artist">{artists.map(this.renderNames)}</h4>
+            <h4 className="song-artist">
+              {artists.map(this.renderArtistsNames)}
+            </h4>
           </div>
           <DeviceSelector
             devices={devices}
