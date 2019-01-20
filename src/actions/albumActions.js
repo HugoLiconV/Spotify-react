@@ -12,7 +12,10 @@ export const getAlbum = id => async dispatch => {
 };
 
 export const getAlbumsTracks = id => async dispatch => {
-  const wrapper = errorHandler(albumService, dispatchError(dispatch));
+  const wrapper = errorHandler(
+    albumService.getAlbumsTracks,
+    dispatchError(dispatch)
+  );
   const tracks = await wrapper(id);
   tracks && dispatch({ type: GET_ALBUM_TRACKS, payload: tracks });
 };

@@ -2,7 +2,7 @@ import { GET_ALBUM, GET_ALBUM_TRACKS } from '../actions/actionTypes';
 
 const initialState = {
   album: {},
-  albumsTracks: []
+  albumsTracks: {}
 };
 
 const album = (state = initialState, action) => {

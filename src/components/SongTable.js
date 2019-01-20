@@ -6,7 +6,8 @@ import CardBody from './Card/CardBody';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import noImageFound from '../assets/img/no_image_found.png';
-import Cover from './Cover';
+import AlbumCover from './AlbumCover';
+import { millisToMinutesAndSeconds } from '../services/utils';
 
 const styles = {
   cardCategoryWhite: {
@@ -47,15 +48,36 @@ function getSmallerImage(images) {
   return widerImage.url;
 }
 
-function createData(songs) {
+function getHeaders({ cover, album, duration }) {
+  // These are default values, they are always shown
+  const headers = ['#', 'Title'];
+  cover && headers.push('');
+  album && headers.push('Album');
+  duration && headers.push('Duration');
+  return headers;
+}
+
+function createData(songs, { cover, album, duration }) {
   if (songs.length === 0) return [];
   return songs.map((song, i) => {
+    const row = [];
     const num = (i + 1).toString();
-    const albumImage = getSmallerImage(song.album.images);
-    const cover = <Cover src={albumImage} width="32px" />;
+    row.push(num);
     const songName = song.name;
-    const albumName = song.album.name;
-    return [num, cover, songName, albumName];
+    row.push(songName);
+    if (song.album) {
+      if (cover) {
+        const albumImage = getSmallerImage(song.album.images);
+        const cover = <AlbumCover src={albumImage} width="32px" />;
+        row.push(cover);
+      }
+      if (album) {
+        const albumName = song.album && song.album.name;
+        row.push(albumName);
+      }
+    }
+    duration && row.push(millisToMinutesAndSeconds(song.duration_ms));
+    return row;
   });
 }
 
@@ -71,8 +93,8 @@ const SongTable = props => {
         <CardBody>
           <Table
             tableHeaderColor="info"
-            tableHead={['', '', 'Title', 'Album']}
-            tableData={createData(songs)}
+            tableHead={getHeaders(props)}
+            tableData={createData(songs, props)}
           />
         </CardBody>
       </Card>
@@ -83,7 +105,9 @@ const SongTable = props => {
 SongTable.propTypes = {
   songs: PropTypes.array.isRequired,
   tableTitle: PropTypes.string.isRequired,
-  tableSubtitle: PropTypes.string
+  cover: PropTypes.bool,
+  album: PropTypes.bool,
+  duration: PropTypes.bool
 };
 
 export default withStyles(styles)(SongTable);

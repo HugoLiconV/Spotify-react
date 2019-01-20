@@ -1,17 +1,31 @@
-import React, { PureComponent } from 'react';
-const style = {
-  width: '100%',
-  backgroundColor: 'rgb(255, 255, 255)',
-  boxShadow: 'rgba(118, 143, 255, 0.1) 0px 16px 24px 0px',
-  borderRadius: '4.5px'
+import React from 'react';
+import GridContainer from './Grid/GridContainer';
+import GridItem from './Grid/GridItem';
+import PropTypes from 'prop-types';
+import AlbumCover from './AlbumCover';
+
+const Cover = props => {
+  const { coverImage, title } = props;
+  return (
+    <GridContainer justify="center" alignItems="center">
+      <GridItem
+        xs={12}
+        sm={6}
+        md={3}
+        style={{ padding: '0', 'text-align': 'center' }}
+      >
+        <AlbumCover src={coverImage} title={title} width="300px" />
+      </GridItem>
+      <GridItem xs={12} sm={6} md={9}>
+        {props.children}
+      </GridItem>
+    </GridContainer>
+  );
 };
 
-class Cover extends PureComponent {
-  render() {
-    const { src, title, width } = this.props;
-    const overrideWidth = width ? width : style.width;
-    return <img src={src} alt={title} style={{ ...style, width: overrideWidth }} />;
-  }
-}
+Cover.propTypes = {
+  coverImage: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
+};
 
 export default Cover;

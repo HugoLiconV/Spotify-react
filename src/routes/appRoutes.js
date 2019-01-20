@@ -10,6 +10,7 @@ import ExploreComp from '../views/Explore';
 import SearchComp from '../views/Search';
 import Profile from '../views/Profile';
 import Artist from '../views/Artist';
+import Album from '../views/Album';
 
 const appRoutes = [
   {
@@ -50,6 +51,13 @@ const appRoutes = [
     sidebarName: 'Artist',
     navbarName: 'Artist',
     component: Artist
+  },
+  {
+    path: '/album/:id',
+    showInSidebar: false,
+    sidebarName: 'Album',
+    navbarName: 'Album',
+    component: Album
   },
   {
     redirect: true,
