@@ -184,7 +184,7 @@ export class PlayingNow extends Component {
     const { artists, album, name } = currentlyPlaying.item;
     return (
       <GridContainer justify="center" style={center} alignItems="center">
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={6} md={6}>
           <AlbumCover src={album.images[0].url} title={album.name} />
           <MediaControls
             id="media-controls"
@@ -200,7 +200,7 @@ export class PlayingNow extends Component {
             previousSong={this.previousSong}
           />
         </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={6} md={6}>
           <div className="song-info">
             <h3 className="song-title">{name}</h3>
             <h4 className="song-artist">{artists.map(this.renderNames)}</h4>
