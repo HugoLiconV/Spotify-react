@@ -7,10 +7,16 @@ import { getItemImage } from '../services/utils';
 import SongTable from '../components/SongTable';
 
 export class Album extends Component {
-  constructor(props) {
-    super(props);
-    this.albumId = this.props.match.params.id;
-    this.fetchAlbumInfo(this.albumId);
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.fetchAlbumInfo(id);
+  }
+
+  componentDidUpdate(e) {
+    if (e.history.location.pathname !== e.location.pathname) {
+      const id = this.props.match.params.id;
+      this.fetchAlbumInfo(id);
+    }
   }
 
   fetchAlbumInfo = id => {

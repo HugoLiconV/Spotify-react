@@ -46,13 +46,9 @@ const styles = {
 };
 
 export class Artist extends Component {
-  constructor(props) {
-    super(props);
-    this.artistId = this.props.match.params.id;
-  }
-
   componentDidMount() {
-    this.fetchArtistData(this.artistId);
+    const id = this.props.match.params.id;
+    this.fetchArtistData(id);
   }
 
   componentDidUpdate(e) {
