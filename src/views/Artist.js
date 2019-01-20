@@ -15,6 +15,7 @@ import ImageGridList from '../components/Grid/ImageGridList';
 import { withStyles } from '@material-ui/core/styles';
 import { play } from '../actions/playerActions';
 import { filterDataToDisplay, getWiderImage } from '../services/utils';
+import uniqBy from 'lodash/uniqBy';
 
 const styles = {
   coverImage: {
@@ -147,7 +148,7 @@ export class Artist extends Component {
               onTileClick={this.onTileClick}
               lg={4}
               xs={2}
-              data={filterDataToDisplay(albumItems)}
+              data={filterDataToDisplay(uniqBy(albumItems, 'name'))}
             />
           </GridItem>
         </GridContainer>
