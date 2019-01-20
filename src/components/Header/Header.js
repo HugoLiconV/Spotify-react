@@ -8,19 +8,25 @@ import Hidden from '@material-ui/core/Hidden';
 import Menu from '@material-ui/icons/Menu';
 import Button from '../Button/Button';
 import headerStyle from '../../assets/styles/components/headerStyle';
+import GoBackButton from '../Button/GoBackButton';
 
 const Header = ({ ...props }) => {
+  const findCurrentRoute = () => {
+    return props.routes.find(route => {
+      const path = route.path.split('/')[1] || route.path;
+      return props.location.pathname.includes(path);
+    });
+  };
   const makeBrand = () => {
-    const name = props.routes.find(
-      prop => prop.path === props.location.pathname
-    );
-    return (name && name.sidebarName) || '';
+    const currentRoute = findCurrentRoute();
+    return currentRoute.sidebarName || '';
   };
   const { classes } = props;
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
+          {findCurrentRoute().showInSidebar ? null : <GoBackButton />}
           <Button color="transparent" href="#" className={classes.title}>
             {makeBrand()}
           </Button>
