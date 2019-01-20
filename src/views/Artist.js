@@ -21,6 +21,7 @@ const styles = {
   coverImage: {
     backgroundPosition: '50%',
     backgroundRepeat: 'no-repeat',
+    padding: '15px 0',
     backgroundSize: 'cover',
     margin: '0 auto 1em',
     width: '100%',
@@ -124,9 +125,9 @@ export class Artist extends Component {
           className={classes.coverImage}
           alt={artist.name || ''}
         >
-          <h1 className={classes.text + ' ' + classes.artistName}>
+          <h2 className={classes.text + ' ' + classes.artistName}>
             {artist.name || ''}
-          </h1>
+          </h2>
           <h4 className={classes.text + ' ' + classes.followers}>
             Followers: {numberWithCommas(followers)}
           </h4>
