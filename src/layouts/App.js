@@ -58,15 +58,15 @@ class App extends Component {
             {...rest}
           />
           <div className={classes.mainPanel} ref="mainPanel">
+            <Header
+              routes={appRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              {...rest}
+            />
             {this.noMargin() ? (
               <div>{switchRoutes}</div>
             ) : (
               <div>
-                <Header
-                  routes={appRoutes}
-                  handleDrawerToggle={this.handleDrawerToggle}
-                  {...rest}
-                />
                 <div className={classes.content}>
                   <div className={classes.container}>{switchRoutes}</div>
                 </div>

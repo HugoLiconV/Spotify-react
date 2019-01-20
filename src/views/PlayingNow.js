@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Cover from '../components/Cover';
+import AlbumCover from '../components/AlbumCover';
 import MediaControls from '../components/MediaControls';
 import GridContainer from '../components/Grid/GridContainer';
 import GridItem from '../components/Grid/GridItem';
@@ -185,7 +185,7 @@ export class PlayingNow extends Component {
     return (
       <GridContainer justify="center" style={center} alignItems="center">
         <GridItem xs={12} sm={12} md={6}>
-          <Cover src={album.images[0].url} title={album.name} />
+          <AlbumCover src={album.images[0].url} title={album.name} />
           <MediaControls
             id="media-controls"
             shuffle={player.shuffle_state}
