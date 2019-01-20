@@ -43,13 +43,21 @@ class Explore extends Component {
     this.props.history.push(`artist/${id}`);
   };
 
+  redirectToPlaylistInfo = id => {
+    this.props.history.push(`playlist/${id}`);
+  };
+
+  redirectToAlbumInfo = id => {
+    this.props.history.push(`album/${id}`);
+  };
+
   showNotification = (status, message, type) => {
     this.props.showNotification(status, message, type);
   };
 
   onTileClick = ({ id, uri, title }) => {
     if (uri.includes('album')) {
-      alert('Not implemented yet 😢');
+      this.redirectToAlbumInfo(id);
     } else if (uri.includes('artist')) {
       this.redirectToArtistInfo(id);
     } else if (uri.includes('track')) {
@@ -60,7 +68,7 @@ class Explore extends Component {
         SUCCESS_NOTIFICATION
       );
     } else if (uri.includes('playlist')) {
-      alert('Not implemented yet 😢');
+      this.redirectToPlaylistInfo(id);
     }
   };
 

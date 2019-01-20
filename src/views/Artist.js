@@ -86,9 +86,13 @@ export class Artist extends Component {
     this.getArtistsRelatedArtists(id);
   };
 
+  redirectToAlbumInfo = id => {
+    this.props.history.push(`/album/${id}`);
+  };
+
   onTileClick = ({ id, uri }) => {
     if (uri.includes('album')) {
-      alert('Not implemented yet 😢');
+      this.redirectToAlbumInfo(id);
     } else if (uri.includes('artist')) {
       this.redirectToArtistInfo(id);
     } else if (uri.includes('track')) {
