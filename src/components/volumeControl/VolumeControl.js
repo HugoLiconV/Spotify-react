@@ -36,6 +36,7 @@ class VolumeControl extends PureComponent {
             step="10"
             onMouseUp={this.onDragEnd}
             onChange={this.onChange}
+            onTouchEnd={this.onDragEnd}
             value={this.state.volume}
           />
         </div>
