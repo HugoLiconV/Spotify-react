@@ -37,6 +37,9 @@ export const SEEK = 'SEEK';
 export const TOGGLE_SHUFFLE = 'TOGGLE_SHUFFLE';
 export const TRANSFER_PLAYBACK = 'TRANSFER_PLAYBACK';
 export const SET_VOLUME = 'SET_VOLUME';
+/* Playlist Actions */
+export const GET_PLAYLIST = 'GET_PLAYLIST';
+export const GET_PLAYLIST_TRACKS = 'GET_PLAYLIST_TRACKS';
 /* Search Actions */
 export const SEARCH = 'SEARCH';
 /* Track Actions */
