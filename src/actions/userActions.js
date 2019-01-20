@@ -1,7 +1,7 @@
 import ProfileService from '../services/http/profile';
 import { GET_CURRENT_USER } from './actionTypes';
 import { errorHandler } from '../services/ErrorService';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 
 export const getCurrentUser = () => async dispatch => {
   const profileService = new ProfileService();

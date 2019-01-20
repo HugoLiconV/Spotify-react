@@ -1,6 +1,6 @@
 import AlbumService from '../services/http/album';
 import { GET_ALBUM, GET_ALBUM_TRACKS } from './actionTypes';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 import { errorHandler } from '../services/ErrorService';
 
 const albumService = new AlbumService();

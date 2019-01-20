@@ -1,6 +1,6 @@
 import TrackService from '../services/http/track';
 import { GET_TRACKS, GET_TRACK } from './actionTypes';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 import { errorHandler } from '../services/ErrorService';
 
 const trackService = new TrackService();

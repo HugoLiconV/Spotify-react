@@ -1,6 +1,6 @@
 import PersonalizationService from '../services/http/personalization';
 import { GET_USERS_TOP_ARTISTS, GET_USERS_TOP_TRACKS } from './actionTypes';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 import { errorHandler } from '../services/ErrorService';
 
 const personalizationService = new PersonalizationService();

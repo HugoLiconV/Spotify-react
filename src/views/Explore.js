@@ -3,13 +3,14 @@ import ImageGridList from '../components/Grid/ImageGridList';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getFeaturedPlaylists, getNewReleases } from '../actions/browseActions';
-import noImageFound from '../assets/img/no_image_found.png';
 import {
   getUsersTopTracks,
   getUsersTopArtists
 } from '../actions/personalizationActions';
 import { play } from '../actions/playerActions';
 import { filterDataToDisplay } from '../services/utils';
+import { showNotification } from '../actions/notificationActions';
+import { SUCCESS_NOTIFICATION } from '../constants';
 class Explore extends Component {
   componentDidMount() {
     this.getFeaturedPlaylists();
@@ -42,13 +43,22 @@ class Explore extends Component {
     this.props.history.push(`artist/${id}`);
   };
 
-  onTileClick = ({ id, uri }) => {
+  showNotification = (status, message, type) => {
+    this.props.showNotification(status, message, type);
+  };
+
+  onTileClick = ({ id, uri, title }) => {
     if (uri.includes('album')) {
       alert('Not implemented yet 😢');
     } else if (uri.includes('artist')) {
       this.redirectToArtistInfo(id);
     } else if (uri.includes('track')) {
       this.play({ uris: [uri] });
+      this.showNotification(
+        null,
+        `${title} started playing.`,
+        SUCCESS_NOTIFICATION
+      );
     } else if (uri.includes('playlist')) {
       alert('Not implemented yet 😢');
     }
@@ -121,7 +131,8 @@ const mapDispatchToProps = {
   getNewReleases,
   getUsersTopTracks,
   getUsersTopArtists,
-  play
+  play,
+  showNotification
 };
 
 export default connect(

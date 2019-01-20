@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
-import { hideError } from './actions/errorActions';
+import { hideNotification } from './actions/notificationActions';
 import SnackbarContentWrapper from './components/SnackbarContentWrapper';
-
-class ErrorMessages extends Component {
+import { INFO_NOTIFICATION } from './constants';
+class Notifications extends Component {
   state = {
     open: false
   };
@@ -14,11 +14,11 @@ class ErrorMessages extends Component {
     if (reason === 'clickaway') {
       return;
     }
-    this.props.hideError();
+    this.props.hideNotification();
   };
 
   render() {
-    const { message, show } = this.props;
+    const { message, show, type } = this.props;
     return (
       <Snackbar
         anchorOrigin={{
@@ -31,7 +31,7 @@ class ErrorMessages extends Component {
       >
         <SnackbarContentWrapper
           onClose={this.handleClose}
-          variant="error"
+          variant={type || INFO_NOTIFICATION}
           message={message}
         />
       </Snackbar>
@@ -39,17 +39,18 @@ class ErrorMessages extends Component {
   }
 }
 
-ErrorMessages.propTypes = {
+Notifications.propTypes = {
   message: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  message: state.error.message,
-  show: state.error.show
+  message: state.notification.message,
+  show: state.notification.show,
+  type: state.notification.type
 });
 
 export default connect(
   mapStateToProps,
-  { hideError }
-)(ErrorMessages);
+  { hideNotification }
+)(Notifications);

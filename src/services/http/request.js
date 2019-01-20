@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { loadItem } from '../localStorage';
+import { ERROR_NOTIFICATION } from '../../constants';
 
 class RequestService {
   constructor(baseUrl = 'https://api.spotify.com/v1/') {
@@ -31,7 +32,15 @@ class RequestService {
       const response = await axios[method](url, data);
       return response.data;
     } catch (e) {
-      return Promise.reject(e.response.data.error || e);
+      const message = e.response.data.error.message || e;
+      const status = e.response.status || e;
+      const type = ERROR_NOTIFICATION;
+      const error = {
+        message,
+        status,
+        type
+      };
+      return Promise.reject(error);
     }
   }
 }

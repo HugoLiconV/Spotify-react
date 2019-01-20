@@ -1,5 +1,5 @@
 import ArtistService from '../services/http/artist';
-import { dispatchError } from './errorActions';
+import { dispatchError } from './notificationActions';
 import { errorHandler } from '../services/ErrorService';
 import {
   GET_ARTIST,

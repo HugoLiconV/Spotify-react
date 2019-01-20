@@ -10,6 +10,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { areArraysEmpty } from '../services/utils';
 import { play } from '../actions/playerActions';
 import { filterDataToDisplay } from '../services/utils';
+import { showNotification } from '../actions/notificationActions';
+import { SUCCESS_NOTIFICATION } from '../constants';
 
 const styles = theme => ({
   container: {
@@ -37,6 +39,10 @@ class Search extends Component {
     });
   };
 
+  showNotification = (status, message, type) => {
+    this.props.showNotification(status, message, type);
+  };
+
   onSubmit = event => {
     event.preventDefault();
     const { searchQuery } = this.state;
@@ -52,13 +58,18 @@ class Search extends Component {
     this.props.history.push(`artist/${id}`);
   };
 
-  onTileClick = ({ id, uri }) => {
+  onTileClick = ({ id, uri, title }) => {
     if (uri.includes('album')) {
       alert('Not implemented yet 😢');
     } else if (uri.includes('artist')) {
       this.redirectToArtistInfo(id);
     } else if (uri.includes('track')) {
       this.play({ uris: [uri] });
+      this.showNotification(
+        null,
+        `${title} started playing.`,
+        SUCCESS_NOTIFICATION
+      );
     } else if (uri.includes('playlist')) {
       alert('Not implemented yet 😢');
     }
@@ -130,7 +141,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   search,
-  play
+  play,
+  showNotification
 };
 
 Search.propTypes = {

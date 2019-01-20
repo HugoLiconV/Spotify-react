@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import album from './album';
 import artist from './artist';
 import browse from './browse';
-import error from './error';
+import notification from './notification';
 import personalization from './personalization';
 import player from './player';
 import search from './search';
@@ -14,7 +14,7 @@ export default combineReducers({
   album,
   artist,
   browse,
-  error,
+  notification,
   personalization,
   player,
   search,
