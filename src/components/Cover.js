@@ -4,7 +4,7 @@ import GridItem from './Grid/GridItem';
 import PropTypes from 'prop-types';
 import AlbumCover from './AlbumCover';
 
-const Cover = props => {
+export const Cover = props => {
   const { coverImage, title } = props;
   return (
     <GridContainer justify="center" alignItems="center">
