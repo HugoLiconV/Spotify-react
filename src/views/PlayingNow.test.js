@@ -2,6 +2,7 @@ import React from 'react';
 import { PlayingNow } from './PlayingNow';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import ArtistLink from '../components/ArtistLink';
 
 describe('<PlayingNow/> component', () => {
   let wrapper;
@@ -294,14 +295,14 @@ describe('<PlayingNow/> component', () => {
 
   it('should show current song playing info (artist and title)', () => {
     const title = wrapper.find('.song-title');
-    const artist = wrapper.find('.song-artist');
+    const artist = wrapper.find(ArtistLink);
     expect(title).toExist();
     expect(artist).toExist();
-    expect(title.text()).toBe(currentlyPlaying.item.name);
-    expect(artist.text()).toBe('Trailer Trash Tracys');
+    expect(title).toHaveText(currentlyPlaying.item.name);
+    expect(artist.props().title).toBe('Trailer Trash Tracys');
   });
   it("should show album's cover", () => {
-    expect(wrapper.find('Cover')).toExist();
+    expect(wrapper.find('AlbumCover')).toExist();
   });
   /*
    * it should show song progress bar
@@ -314,5 +315,62 @@ describe('<PlayingNow/> component', () => {
 
   it("should show recently played album's covers", () => {
     expect(wrapper.find('#recently-played')).toExist();
+  });
+
+  it('should print Nothing is playing when player.item is null', () => {
+    const props = {
+      recentlyPlayed: {},
+      player: {
+        device: {
+          id: 'c3dbf2b97ebfc7207341caddeba8e1c46804661f',
+          is_active: true,
+          is_private_session: false,
+          is_restricted: false,
+          name: 'mcbk',
+          type: 'Computer',
+          volume_percent: 80
+        },
+        shuffle_state: false,
+        repeat_state: 'context',
+        timestamp: -557,
+        context: null,
+        progress_ms: 0,
+        item: null,
+        currently_playing_type: 'unknown',
+        is_playing: false
+      },
+      devices: [
+        {
+          id: 'c3dbf2b97ebfc7207341caddeba8e1c46804661f',
+          is_active: true,
+          is_private_session: false,
+          is_restricted: false,
+          name: 'mcbk',
+          type: 'Computer',
+          volume_percent: 80
+        }
+      ],
+      currentlyPlaying: {
+        timestamp: -557,
+        context: null,
+        progress_ms: 0,
+        item: null,
+        currently_playing_type: 'unknown',
+        is_playing: false
+      },
+      pollingPlayerState: jest.fn(),
+      getCurrentlyPlaying: jest.fn(),
+      nextSong: jest.fn(),
+      getPlayer: jest.fn(),
+      previousSong: jest.fn(),
+      setVolume: jest.fn(),
+      getDevices: jest.fn(),
+      pause: jest.fn(),
+      play: jest.fn(),
+      setRepeat: jest.fn(),
+      toggleShuffle: jest.fn()
+    };
+    const wrapper = shallow(<PlayingNow {...props} />);
+    expect(wrapper).toHaveText('Nothing is playing');
   });
 });

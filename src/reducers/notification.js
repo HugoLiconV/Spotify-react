@@ -11,9 +11,11 @@ const notification = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       const { message, status, type } = action.payload;
+      const _message =
+        typeof message === 'object' ? `${type} ${status}` : message;
       return {
         ...state,
-        message,
+        message: _message,
         status,
         type,
         show: true

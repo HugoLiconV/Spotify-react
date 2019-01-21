@@ -179,8 +179,13 @@ export class PlayingNow extends Component {
     const { items } = this.props.recentlyPlayed;
     const tracks = items && items.map(item => item.track);
 
-    if (isObjectEmpty(currentlyPlaying) || isObjectEmpty(player))
-      return 'Nothing is playing';
+    if (
+      isObjectEmpty(currentlyPlaying) ||
+      isObjectEmpty(player) ||
+      !currentlyPlaying.item
+    ) {
+      return <h2>Nothing is playing</h2>;
+    }
     const { device } = player;
     const { artists, album, name } = currentlyPlaying.item;
     return (
