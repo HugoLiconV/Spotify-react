@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-const AlbumLink = props => {
+export const AlbumLink = props => {
   function redirectToAlbumInfo(id) {
     props.history.push(`/album/${id}`);
   }
