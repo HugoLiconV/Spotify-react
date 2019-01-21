@@ -14,7 +14,7 @@ const Cover = props => {
         md={3}
         style={{ padding: '0', textAlign: 'center' }}
       >
-        <AlbumCover src={coverImage} title={title} width="300px" />
+        <AlbumCover src={coverImage} title={title} width="100%" />
       </GridItem>
       <GridItem xs={12} sm={6} md={9}>
         {props.children}
