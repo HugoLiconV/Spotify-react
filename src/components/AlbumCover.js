@@ -8,7 +8,7 @@ const style = {
   borderRadius: '4.5px'
 };
 
-class AlbumCover extends PureComponent {
+export class AlbumCover extends PureComponent {
   render() {
     const { src, title, width } = this.props;
     const overrideWidth = width ? width : style.width;

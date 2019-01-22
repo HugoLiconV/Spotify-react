@@ -5,7 +5,7 @@ import { play } from '../actions/playerActions';
 import { showNotification } from '../actions/notificationActions';
 import { SUCCESS_NOTIFICATION } from '../constants';
 
-const TrackLink = props => {
+export const TrackLink = props => {
   function showNotification(status, message, type) {
     props.showNotification(status, message, type);
   }
