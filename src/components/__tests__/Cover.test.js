@@ -18,7 +18,7 @@ describe('<Cover/> component', () => {
   });
 
   it('should render props.children ', () => {
-    console.log(wrapper.debug());
+    // console.log(wrapper.debug());
     // const img = wrapper.find('img');
     // expect(img).toExist();
     // expect(img.prop('src')).toBe(props.src);

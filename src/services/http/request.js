@@ -22,7 +22,6 @@ class RequestService {
   setHeaders = () => {
     const token = loadItem('TOKEN');
     if (token) {
-      console.log('token');
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios.defaults.headers.common['Content-Type'] = 'application/json';
     }

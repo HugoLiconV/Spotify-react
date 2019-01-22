@@ -11,11 +11,11 @@ exports[`<Artist /> component should match the snapshot 1`] = `
       }
     }
   >
-    <h1
+    <h2
       className="text artistName"
     >
       Arctic Monkeys
-    </h1>
+    </h2>
     <h4
       className="text followers"
     >

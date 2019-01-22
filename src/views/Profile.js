@@ -34,7 +34,7 @@ Profile.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user.curretUser
+    currentUser: state.user.currentUser
   };
 };
 

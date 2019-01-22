@@ -1,14 +1,14 @@
 import { GET_CURRENT_USER } from '../actions/actionTypes';
 
 const initialState = {
-  curretUser: {}
+  currentUser: {}
 };
 
 const user = (state = initialState, action) => {
   switch (action.type) {
     case GET_CURRENT_USER:
       return {
-        curretUser: action.payload
+        currentUser: action.payload
       };
 
     default:
