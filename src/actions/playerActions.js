@@ -99,7 +99,7 @@ export const setRepeat = state => async dispatch => {
 
 export const seek = position_ms => dispatch => {
   const wrapper = errorHandler(playerService.seek, dispatchError(dispatch));
-  const res = wrapper(position_ms).seek(position_ms);
+  const res = wrapper(position_ms);
   res && dispatch({ type: SEEK });
 };
 
