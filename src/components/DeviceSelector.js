@@ -17,6 +17,25 @@ class DeviceSelector extends React.Component {
     anchorEl: null
   };
 
+  /**
+   * This functions works to know if the array of devices received from the
+   * new props is equals to the current one. If that's the case, it should
+   * not update the component */
+  areDevicesEqual(current, updated) {
+    if (current.length !== updated.length) return false;
+    return current.every(
+      ({ id, is_active }, i) =>
+        id === updated[i].id && is_active === updated[i].is_active
+    );
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(
+      nextState === this.state &&
+      this.areDevicesEqual(nextProps.devices, this.props.devices)
+    );
+  }
+
   getActiveDevice = devices => {
     const activeDevice = devices.filter(device => device.is_active);
     if (activeDevice.length > 0) {
