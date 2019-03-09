@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
@@ -16,7 +16,22 @@ const style = {
   }
 };
 
-export class MediaControls extends PureComponent {
+export class MediaControls extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    const {
+      shuffle: shuffleUpdated,
+      isPlaying: isPlayingUpdated,
+      repeatState: repeatStateUpdated
+    } = nextProps;
+
+    const { shuffle, isPlaying, repeatState } = this.props;
+    return (
+      shuffleUpdated !== shuffle ||
+      isPlayingUpdated !== isPlaying ||
+      repeatStateUpdated !== repeatState
+    );
+  }
+
   render() {
     const {
       classes,

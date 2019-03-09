@@ -21,7 +21,8 @@
     "react-scripts": "2.1.1",
     "react-test-renderer": "16.7.0",
     "redux": "4.0.1",
-    "redux-thunk": "2.3.0"
+    "redux-thunk": "2.3.0",
+    "why-did-you-update": "1.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
