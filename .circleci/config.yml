@@ -23,7 +23,6 @@
 #           name: 'Deploy to Firebase Hosting'
 #           command: './node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN'
 defaults: &defaults
-  #working_directory: ./circleci
   docker:
     - image: circleci/node:8
 
@@ -73,15 +72,15 @@ jobs:
       - deploy:
           name: 'Deploy to Firebase Hosting'
           command: |
-          if [ ! -d "build" ]
-            then
-              echo "build folder not found"
-              exit 1
+            if [ ! -d "build" ]
+              then
+                echo "build folder not found"
+                exit 1
+              fi
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              './node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN'
+              echo "Deployed to Firebase 🤓"
             fi
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            './node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN'
-            echo "Deployed to Firebase 🤓"
-          fi
 workflows:
   version: 2
   build_accept_deploy:
