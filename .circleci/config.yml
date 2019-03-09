@@ -59,10 +59,10 @@ jobs:
             fi
 workflows:
   version: 2
-  build_accept_deploy:
+  build-test-and-deploy:
     jobs:
       - prepare
-      - build:
+      - build
       - test:
           requires:
             - build
