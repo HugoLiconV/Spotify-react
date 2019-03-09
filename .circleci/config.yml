@@ -1,24 +1,96 @@
+# version: 2
+# jobs:
+#   build:
+#     docker:
+#       - image: 'circleci/node:8'
+#     working_directory: ~/repo
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           keys:
+#             - 'v1-dependencies-{{ checksum "package.json" }}'
+#             - v1-dependencies-
+#       - run: 'yarn install'
+#       - save_cache:
+#           paths:
+#             - node_modules
+#           key: 'v1-dependencies-{{ checksum "package.json" }}'
+#       - run: 'yarn test'
+#       - run:
+#           name: 'Build Project'
+#           command: 'yarn build'
+#       - run:
+#           name: 'Deploy to Firebase Hosting'
+#           command: './node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN'
+defaults: &defaults
+  #working_directory: ./circleci
+  docker:
+    - image: circleci/node:8
+
 version: 2
 jobs:
-  build:
-    docker:
-      - image: 'circleci/node:8'
-    working_directory: ~/repo
+  prepare:
+    <<: *defaults
     steps:
       - checkout
+      # Download and cache dependencies
       - restore_cache:
           keys:
-            - 'v1-dependencies-{{ checksum "package.json" }}'
-            - v1-dependencies-
-      - run: 'yarn install'
+          - v1-dependencies-{{ checksum "package.json" }}
+      - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: 'v1-dependencies-{{ checksum "package.json" }}'
-      - run: 'yarn test'
-      - run:
-          name: 'Build Project'
-          command: 'yarn build'
-      - run:
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run test
+  deploy-firebase:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - deploy:
           name: 'Deploy to Firebase Hosting'
-          command: './node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN'
+          command: |
+          if [ ! -d "build" ]
+            then
+              echo "build folder not found"
+              exit 1
+            fi
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            './node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN'
+            echo "Deployed to Firebase 🤓"
+          fi
+workflows:
+  version: 2
+  build_accept_deploy:
+    jobs:
+      - prepare
+      - build:
+      - test:
+          requires:
+            - build
+      - deploy-firebase:
+          requires:
+            - tu
